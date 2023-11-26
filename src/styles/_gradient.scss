@@ -1,0 +1,4 @@
+@use "./colors" as *;
+
+$gradient-background: linear-gradient(180deg, $primary-gradient 0%, $secondary-gradient 100%);
+$gradient-secondary: linear-gradient(180deg, $primary-gradient 0%, $sub-gradient 100%)

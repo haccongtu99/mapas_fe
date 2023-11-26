@@ -1,0 +1,95 @@
+button {
+    color: #000
+}
+
+.container {
+    width: fit-content;
+    cursor: pointer;
+    color: $black;
+    @include flex-center;
+
+    border-radius: 10rem;
+    padding: 0 4rem;
+    height: 60px;
+    
+    font-weight: $font-normal;
+    line-height: $text-lg;
+    text-align: center;
+
+    .content {
+        @include flex-center;
+        font-weight: $font-bold;
+    }
+
+    .icon {
+        margin-left: 2px
+    }
+}
+
+.primary {
+    background: $gradient-background;
+    border: none;
+}
+
+.default {
+    background-color: var(--mantine-color-gray-1);
+    border: none;
+
+    &:hover {
+        background-color: var(--mantine-color-gray-2);
+    }
+}
+
+.outline {
+    background-color: $white;
+    border: 1px solid var(--mantine-color-primary-4);
+    &:hover {
+        background: $gradient-background;
+        border: 1px solid $secondary-gradient;
+    }
+}
+
+.text {
+    background-color: $white;
+    border: none;
+    padding: $text-xsm $text-15;
+
+    font-weight: $font-bold;
+    border-radius: $text-xsm;
+
+    &:hover {
+        color: var(--mantine-color-primary);
+    }
+}
+
+.active  {
+    background-color: var(--mantine-color-primary);
+    color: $white;
+
+    &:hover {
+        color: $white;
+    }
+}
+
+@media only screen and (max-width: $desktop-screen-base) {
+    .container {
+        padding: 0 47px;
+        height: 50px;
+
+        .content {
+            font-size: $text-base;
+            line-height: 1;
+        }
+    }
+}
+
+@media only screen and (max-width: $mobile-screen-md) {
+    .container {
+        padding: 0 39px;
+        height: 40px;
+
+        .content {
+            font-size: $text-sm;
+        }
+    }
+}

@@ -1,0 +1,178 @@
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    &:hover {
+
+        .background {
+            filter: brightness(0.6);
+        }
+
+        .badge {
+            display: block;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .link {
+            display: block;
+            bottom: 85px;
+            left: 20px;
+            transition: all ease-in-out;
+        }
+    }
+
+    .badge {
+        position: absolute;
+        display: none;
+        left: 20px;
+        bottom: 20px;
+        z-index: $zIndex-11;
+
+        text-align: left;
+        color: $white;
+        
+        width: 380px;
+        padding: 10px 1rem;
+        background-color: rgba($color: #000000, $alpha: 0.6);
+        border-radius: 15px;
+
+        .title {
+            width: 350px;
+            overflow-x: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            font-size: $text-15;
+            font-weight: $font-bold;
+            line-height: $text-xl;
+        }
+
+        .description {
+            color: $gray-text-100;
+            font-size: $text-13;
+            font-weight: $font-normal;
+            line-height: normal;
+            
+            overflow-x: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            margin-top: 3px;
+        }
+    }
+
+    .link {
+        display: none;
+        position: absolute;
+        left: 20px;
+        bottom: 20px;
+        font-size: $text-13;
+        line-height: normal;
+        height: 30px;
+
+        z-index: $zIndex-11;
+
+        cursor: pointer;
+        padding: 7px 15px;
+        text-align: center;
+        color :$gray-text-100;
+        background-color: rgba($color: #000000, $alpha: 0.6);
+        border-radius: 30px;
+
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        &:hover {
+            color: $input-border;
+            transition: none
+        }
+    }
+
+    .numberImage {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        z-index: $zIndex-11;
+        display: block;
+
+        background-color: rgba($color: #000000, $alpha: 0.4);
+        padding: 5px 20px;
+        border-radius: 100px;
+        color: $white;
+        text-align: center;
+    }
+}
+
+.background {
+    border-radius: 30px;
+    width: 100%;
+    height: 100%;
+
+    margin: 0 auto;
+    object-fit: cover;
+}
+
+@media only screen and (max-width: $desktop-screen-base) {
+    .container {
+        .badge {
+            max-width: calc(100% - 40px);
+        }
+
+        .link {
+            max-width: calc(100% - 40px);
+        }
+
+        .background {
+            border-radius: 20px;
+        }
+    }
+}
+
+@media only screen and (max-width: $mobile-screen-lg) {
+    .container {
+        border-radius: 10px;
+        .background {
+            border-radius: 10px;
+        }
+        &:hover {    
+            .link {
+                bottom: 75px;
+                left: 10px;
+                transition: all ease-in-out;
+            }
+        }
+
+        .link {
+            max-width: calc(100% - 20px);
+            left: 10px;
+            bottom: 10px;
+        }
+
+        .badge {
+            max-width: calc(100% - 20px);
+            left: 10px;
+            bottom: 10px;
+            padding: auto 0.8rem;
+            height: 60px;
+            border-radius: 10px;
+            
+            .title {
+                font-size: $text-13;
+                width: 100%;
+            }
+            
+            .description {
+                font-size: $text-xs;
+                margin-top: 1px;
+                width: 100%;
+            }
+        }
+
+        .numberImage {
+            top: 10px;
+            right: 10px;
+        }
+    }
+}

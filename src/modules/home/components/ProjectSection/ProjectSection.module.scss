@@ -1,0 +1,24 @@
+.project {
+    @include flex-center;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+}
+
+@media only screen and (max-width: $desktop-screen-base) {
+    .project {
+        gap: 22px;
+    }
+}
+
+@media only screen and (max-width: var(--mantine-breakpoint-md)) {
+    .project {
+        gap: 18px;
+    }
+}
+
+@media only screen and (max-width: var(--mantine-breakpoint-sm)) {
+    .project {
+        gap: 10px;
+    }
+}

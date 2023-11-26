@@ -1,0 +1,95 @@
+.container {
+    @include flex-center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    width: 100vw;
+    z-index: 999;
+
+    background-color: $white;
+
+    padding: 0 60px;
+    border-bottom: 1px solid $secondary-gradient;
+
+    .image {
+        cursor: pointer;
+    }
+
+    .menu {
+        display: none;
+    }
+
+    .tabs {
+        display: flex;
+
+        .button {
+            height: 40px;
+        }
+    }
+
+    .input {
+        background-color: var(--mantine-color-gray-1);
+        width: 370px;
+        color: $gray-text-100;
+        border-radius: 50px;
+        border: 1px solid transparent;
+        color: $black;
+        
+        &:focus-within {
+            border: 1px solid $gray-text-100;
+            background-color: $input-focus-background;
+        }
+    }
+}
+
+@media only screen and (max-width: $desktop-screen-base) {
+    .container {
+        padding: 0 20px;
+
+        .input {
+            width: 210px;
+        }
+        .menu {
+            display: block;
+        }
+    
+        .tabs {
+            display: none;
+        }
+    }
+}
+
+@media only screen and (max-width: $mobile-screen) {
+    .container {
+        padding: 0 20px;
+
+        .input {
+            width: 210px;
+            font-size: $text-13;
+        }
+        .menu {
+            display: block;
+        }
+    
+        .tabs {
+            display: none;
+        }
+    }
+}
+
+@media only screen and (max-width: $mobile-screen-md) {
+    .container {
+        .input {
+            width: 170px;
+        }
+    }
+}
+
+@media only screen and (max-width: $mobile-screen-sm) {
+    .container {
+        padding: 0 10px;
+    }
+}

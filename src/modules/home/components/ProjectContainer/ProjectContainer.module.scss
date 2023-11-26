@@ -1,0 +1,113 @@
+.container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-auto-flow: column;
+    grid-gap: 30px;
+    margin: 0 auto;
+    width: 100%;
+
+    .main {
+        max-width: 870px;
+        max-height: 870px;
+        grid-area: A;
+    }
+
+    .sub {
+        max-width: 420px;
+        max-height: 420px;
+    }
+
+    .top { grid-area: B; }
+
+    .bottom { grid-area: C; }
+}
+
+.right {grid-template-areas: "B A A" "C A A"; }
+
+.left { grid-template-areas: "A A B" "A A C"; }
+
+@media only screen and (max-width: $desktop-screen-sm) {
+    .container {
+        grid-gap: 22px;
+    }
+    .main {
+        max-width: 634px;
+        max-height: 634px;
+    }
+
+    .sub {
+        max-width: 308px;
+        max-height: 308px;
+    }
+}
+
+// @media only screen and (max-width: $desktop-screen-base) {
+//     .container {
+//         gap: 22px;
+//     }
+
+//     .main {
+//         max-width: 634px;
+//         max-height: 634px;
+//     }
+
+//     .sub {
+//         max-width: 308px;
+//         max-height: 308px;
+//     }
+// }
+
+@media only screen and (max-width: 1023px) {
+    .container {
+        grid-gap: 18px;
+        border-radius: 20px;
+    }
+
+    .main {
+        max-width: 510px;
+        max-height: 508px;
+    }
+
+    .sub {
+        max-width: 246px;
+        max-height: 245px;
+    }
+}
+
+@media only screen and (max-width: $mobile-screen) {
+    .container {
+        grid-gap: 10px;
+
+        .main {
+            min-width: calc(100vw - 60px);
+            min-height: calc(100vw - 60px);
+        }
+    }
+
+    .right {grid-template-areas: "A A A A" "A A A A" "B B C C" "B B C C"; }
+    .left { grid-template-areas: "A A A A" "A A A A" "B B C C" "B B C C"; }
+}
+
+@media only screen and (max-width: $mobile-screen-md) {
+    .main {
+        max-width: 390px;
+        max-height: 390px;
+    }
+
+    .sub {
+        max-width: 190px;
+        max-height: 190px;
+    }
+}
+
+@media only screen and (max-width: 390px) {
+    .main {
+        max-width: 320px;
+        max-height: 320px;
+    }
+
+    .sub {
+        max-width: 156px;
+        max-height: 156px;
+    }
+}
