@@ -1,40 +1,29 @@
 .container {
-    @include flex-center;
-    justify-content: space-between;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 60px;
-    width: 100vw;
-    z-index: 999;
+    padding: 0 20px;
+    .left-section {
+        gap: 1px;
 
-    background-color: $white;
+        .button {
+            border-radius: 0 10px 10px 0;
+            width: 176px;
 
-    padding: 0 60px;
-    border-bottom: 1px solid $secondary-gradient;
+            .label {
+                font-size: $text-sm;
+                color: var(--mantine-color-black);
+                font-weight: $font-normal;
+            }
+        }
+    }
 
     .image {
         cursor: pointer;
     }
 
-    .menu {
-        display: none;
-    }
-
-    .tabs {
-        display: flex;
-
-        .button {
-            height: 40px;
-        }
-    }
-
     .input {
         background-color: var(--mantine-color-gray-1);
-        width: 370px;
+        width: 590px;
         color: $gray-text-100;
-        border-radius: 50px;
+        border-radius: 10px 0 0 10px;
         border: 1px solid transparent;
         color: $black;
         
@@ -48,16 +37,8 @@
 @media only screen and (max-width: $desktop-screen-base) {
     .container {
         padding: 0 20px;
-
         .input {
             width: 210px;
-        }
-        .menu {
-            display: block;
-        }
-    
-        .tabs {
-            display: none;
         }
     }
 }
@@ -69,13 +50,6 @@
         .input {
             width: 210px;
             font-size: $text-13;
-        }
-        .menu {
-            display: block;
-        }
-    
-        .tabs {
-            display: none;
         }
     }
 }

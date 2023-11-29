@@ -1,0 +1,15 @@
+
+.root {
+    .breadcrumb {
+        color: var(--mantine-color-gray-4);
+        font-weight: $font-bold;
+    }
+
+    .active {
+        color: var(--mantine-color-black);
+    }
+
+    .label {
+        font-size: $text-xl;
+    }
+}

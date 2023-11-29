@@ -1,0 +1,17 @@
+.header {
+    --app-shell-header-height: 60px;
+    padding-left: 240px;
+    @include flex-center;
+    justify-content: space-between;
+    border-bottom: 1px solid $secondary-gradient;
+}
+
+.navbar {
+    --app-shell-navbar-width: 240px;
+}
+
+.main {
+    --app-shell-navbar-offset: 240px;
+    --app-shell-header-offset: 60px;
+    padding: 40px;
+}

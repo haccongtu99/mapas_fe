@@ -1,6 +1,6 @@
 import { FaceBookLogo } from '@/assets'
 import CustomButton from '@/components/Button'
-import ProjectSection from '@/modules/home/components/ProjectSection'
+import ProjectSection from '@/modules/projects/components/ProjectSection'
 import { Button, Flex, Stack, Text, Title } from '@mantine/core'
 import { IconArrowLeft } from '@tabler/icons-react'
 
@@ -56,3 +56,5 @@ export const HomePage = () => {
     </Stack>
   )
 }
+
+export const Component = HomePage

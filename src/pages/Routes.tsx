@@ -1,35 +1,34 @@
 import Layout from '@/components/Layout'
-import { ROOT_ROUTES } from '@/constants/routesString'
-import { lazyImport } from '@/utils/lazyImport'
+import { PROJECTS_ROUTES, ROOT_ROUTES } from '@/constants/routesString'
 import { createBrowserRouter } from 'react-router-dom'
-
-const { HomePage } = lazyImport(() => import('@/pages/Home'), 'HomePage')
-const { NotFoundPage } = lazyImport(
-  () => import('@/pages/NotFound'),
-  'NotFoundPage'
-)
 
 export const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
       {
-        element: <HomePage />,
+        lazy: () => import('./Home'),
         path: ROOT_ROUTES.HOME
       },
       {
-        element: <></>,
-        path: ROOT_ROUTES.OVERVIEW
+        lazy: () => import('./Statistic'),
+        path: ROOT_ROUTES.STATISTIC
       },
       {
-        element: null,
-        path: ROOT_ROUTES.PROJECTS
+        lazy: () => import('./Projects'),
+        path: ROOT_ROUTES.PROJECTS,
+        children: [
+          {
+            lazy: () => import('./Projects'),
+            path: PROJECTS_ROUTES.CREATE
+          }
+        ]
       },
       {
-        element: <></>,
-        path: ROOT_ROUTES.USER
+        lazy: () => import('./Users'),
+        path: ROOT_ROUTES.CLIENTS
       }
     ]
   },
-  { path: ROOT_ROUTES.NOT_FOUND, element: <NotFoundPage /> }
+  { path: ROOT_ROUTES.NOT_FOUND, lazy: () => import('./NotFound') }
 ])
