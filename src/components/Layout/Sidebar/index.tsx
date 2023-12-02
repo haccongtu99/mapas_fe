@@ -3,13 +3,18 @@ import { ROOT_ROUTES } from '@/constants'
 import { navbarConfig } from '@/constants/navbar'
 import { ActionIcon, AppShellNavbar, Flex, NavLink, Stack } from '@mantine/core'
 import { IconGridDots } from '@tabler/icons-react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import classes from './Sidebar.module.scss'
 import clsx from 'clsx'
+import { useEffect } from 'react'
 
 export const Sidebar = () => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
+
+  useEffect(() => {
+    console.log(navbarConfig, 'navbarConfig...')
+  }, [])
 
   return (
     <AppShellNavbar>
@@ -25,7 +30,6 @@ export const Sidebar = () => {
             <IconGridDots />
           </ActionIcon>
         </Flex>
-
         {navbarConfig.map(({ mainLink, subLink, icon }, index) => (
           <NavLink
             label={mainLink.label}
@@ -38,18 +42,17 @@ export const Sidebar = () => {
             key={index}
           >
             {subLink.map(({ label, path }, index) => (
-              <Link to={path} key={index}>
-                <NavLink
-                  label={label}
-                  href={path}
-                  classNames={{
-                    root: clsx(
-                      classes['sub-root'],
-                      pathname.includes(path) && classes.active
-                    )
-                  }}
-                />
-              </Link>
+              <NavLink
+                key={index}
+                label={label}
+                onClick={() => navigate(path)}
+                classNames={{
+                  root: clsx(
+                    classes['sub-root'],
+                    pathname.includes(path) && classes.active
+                  )
+                }}
+              ></NavLink>
             ))}
           </NavLink>
         ))}

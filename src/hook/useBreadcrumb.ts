@@ -18,5 +18,5 @@ export const useBreadcrumb = () => {
     path: path
   }))
 
-  return { breadcrumb, activeBreadcrumb: activeBreadcrumb }
+  return { breadcrumb, activeBreadcrumb }
 }
