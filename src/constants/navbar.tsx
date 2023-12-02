@@ -1,9 +1,11 @@
+import { AppIcon } from '@/components/AppIcon'
 import { IconHome, IconPlus } from '@tabler/icons-react'
 
 export const navbarConfig = [
   {
     mainLink: { label: 'Tổng quan', path: '' },
-    icon: <IconHome size={20} color="silver" />,
+    // icon: <IconHome size={20} color="silver" />,
+    icon: <AppIcon name="bejou-black" size={30} color="red" />,
     subLink: [{ label: 'Thống kê phân tích', path: '/statistic' }]
   },
   {
