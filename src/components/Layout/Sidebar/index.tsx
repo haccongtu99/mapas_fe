@@ -1,20 +1,33 @@
 import { MapasLogo } from '@/assets'
 import { ROOT_ROUTES } from '@/constants'
-import { navbarConfig } from '@/constants/navbar'
 import { ActionIcon, AppShellNavbar, Flex, NavLink, Stack } from '@mantine/core'
 import { IconGridDots } from '@tabler/icons-react'
-import { useLocation, useNavigate } from 'react-router-dom'
-import classes from './Sidebar.module.scss'
 import clsx from 'clsx'
 import { useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import classes from './Sidebar.module.scss'
+
+import { IconHome, IconPlus } from '@tabler/icons-react'
+
+export const navbarConfig = [
+  {
+    mainLink: { label: 'Tổng quan', path: '' },
+    icon: <IconHome size={20} color="silver" />,
+    subLink: [{ label: 'Thống kê phân tích', path: '/statistic' }]
+  },
+  {
+    mainLink: { label: 'Tạo lập', path: '' },
+    icon: <IconPlus size={20} color="silver" />,
+    subLink: [
+      { label: 'Dự án', path: '/projects' },
+      { label: 'Khách hàng', path: '/clients' }
+    ]
+  }
+]
 
 export const Sidebar = () => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
-
-  useEffect(() => {
-    console.log(navbarConfig, 'navbarConfig...')
-  }, [])
 
   return (
     <AppShellNavbar>
