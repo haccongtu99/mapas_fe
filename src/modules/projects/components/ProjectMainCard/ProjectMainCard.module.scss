@@ -1,0 +1,15 @@
+.container {
+  width: 320px;
+  height: 320px;
+  border-radius: 30px;
+  // background-color: yellowgreen;
+  background-color: $background-light;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover {
+    background: red;
+    opacity: 0.8;
+  }
+}

@@ -18,14 +18,16 @@ export const AppIcon = ({
   height,
   size,
   color = 'defaultColor',
-  spin = false,
   disable = false
 }: Props) => {
+  // @ts-ignore
   const [iconPath, setIconPath] = useState<any>()
   const [viewBox, setViewBox] = useState<any>('0 0 24 24')
+  // @ts-ignore
   const [widthIcon, setWidthIcon] = useState<string | number>(
     width ? width : size
   )
+  // @ts-ignore
   const [heightIcon, setHeightIcon] = useState<string | number>(
     height ? height : size
   )

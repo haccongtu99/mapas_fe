@@ -16,15 +16,15 @@ export const translationsJson = {
   }
 }
 
-export const translation = convertLanguageJsonToObject(en)
+export const translation = convertLanguageJsonToObject(vi)
 
 export const i18n = i18next
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     resources: translationsJson,
-    fallbackLng: 'en',
-    lng: `${window.localStorage.getItem('i18nextLng') || LANGUAGES.en}`,
+    fallbackLng: 'vi',
+    lng: `${window.localStorage.getItem('i18nextLng') || LANGUAGES.vi}`,
     debug: !import.meta.env.PROD,
     returnNull: false,
     interpolation: {

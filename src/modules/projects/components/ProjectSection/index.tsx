@@ -18,7 +18,7 @@ import { translation } from '@/configs/i18n/i18n'
 import { useTranslation } from 'react-i18next'
 import HomeHeader from '../HomeHeader'
 import HomeLayout from '../HomeLayout'
-import ProjectContainer from '../ProjectContainer'
+import HomeProjectContainer from '../HomeProjectContainer'
 import classes from './ProjectSection.module.scss'
 
 const ProjectSection = () => {
@@ -37,7 +37,7 @@ const ProjectSection = () => {
       }
     >
       <div className={classes.project}>
-        <ProjectContainer
+        <HomeProjectContainer
           mainImage={{
             path: ONE_PROJECT,
             title: 'ONE Drink & Food - Website Thương Mại F&B',
@@ -62,7 +62,7 @@ const ProjectSection = () => {
           ]}
         />
 
-        <ProjectContainer
+        <HomeProjectContainer
           subImage={[
             {
               path: EDUTEK,
@@ -87,7 +87,7 @@ const ProjectSection = () => {
           direction="right"
         />
 
-        <ProjectContainer
+        <HomeProjectContainer
           subImage={[
             {
               path: MARKEE_RESTAURANT,
@@ -110,7 +110,7 @@ const ProjectSection = () => {
           }}
         />
 
-        <ProjectContainer
+        <HomeProjectContainer
           subImage={[
             {
               path: VINPEARL_VOUCHER,
