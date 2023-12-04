@@ -3,7 +3,7 @@ module.exports = {
   rules: {
     'subject-case': [
 			2,
-			'always',
+			'never',
 			['sentence-case', 'start-case', 'pascal-case', 'upper-case'],
 		],
   }
