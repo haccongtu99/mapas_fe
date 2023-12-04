@@ -3,21 +3,33 @@ import { useTranslation } from 'react-i18next'
 import { translation } from '@/configs/i18n/i18n'
 import { ProjectMainCard } from '@/modules/projects/components/ProjectMainCard'
 import classes from './Projects.module.scss'
+import { Outlet, useLocation } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
 export const ProjectPage = () => {
   const { t } = useTranslation()
+  const location = useLocation()
+  const [isMainPage, setIsMainPage] = useState<boolean>(false)
+
+  useEffect(() => {
+    setIsMainPage(location.pathname === '/projects')
+  }, [location])
   return (
     <Box>
-      <Stack>
-        <Text>{t(translation.global.projects)}</Text>
-        <Box className={classes.container}>
-          <ProjectMainCard isCreateNew="true"></ProjectMainCard>
-          <ProjectMainCard></ProjectMainCard>
-          <ProjectMainCard></ProjectMainCard>
-          <ProjectMainCard></ProjectMainCard>
-          <ProjectMainCard></ProjectMainCard>
-        </Box>
-      </Stack>
+      {isMainPage ? (
+        <Stack>
+          <Text>{t(translation.global.projects)}</Text>
+          <Box className={classes.container}>
+            <ProjectMainCard isCreateNew="true"></ProjectMainCard>
+            <ProjectMainCard></ProjectMainCard>
+            <ProjectMainCard></ProjectMainCard>
+            <ProjectMainCard></ProjectMainCard>
+            <ProjectMainCard></ProjectMainCard>
+          </Box>
+        </Stack>
+      ) : (
+        <Outlet />
+      )}
     </Box>
   )
 }

@@ -11,7 +11,6 @@ const svg = () => {
       icons[svgName] = svgFileList[fileName]
     }
   }
-  console.log(icons)
   return icons
 }
 

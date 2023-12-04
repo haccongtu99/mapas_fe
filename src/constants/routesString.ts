@@ -9,5 +9,6 @@ export const ROOT_ROUTES = {
 }
 
 export const PROJECTS_ROUTES = {
-  CREATE: 'create'
+  CREATE: 'create',
+  EDIT: 'edit'
 }

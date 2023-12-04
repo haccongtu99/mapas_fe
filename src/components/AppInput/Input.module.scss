@@ -1,0 +1,45 @@
+// Will refactor later
+.text__title {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000000;
+}
+
+.text--imperative {
+  font-style: italic;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: right;
+  color: #FE5F51;
+}
+
+.input {
+  background: $light !important;
+  border-radius: 10px;
+  &:focus {
+    border-color: #000000;
+  }
+}
+
+.input-text {
+  height: 40px;
+  max-height: 80px;
+  font-size: 12px;
+}
+
+.input-area {
+  // justify-content: flex-start;
+  align-items: flex-start;
+  min-height: 180px;
+}
+
+.right-section {
+  display: none;
+}
+
+.input--invalid {
+  max-height: 80px;
+  background: #FE5F51;
+}
