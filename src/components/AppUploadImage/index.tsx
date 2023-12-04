@@ -16,7 +16,7 @@ export const AppUploadImage = ({ type, title, size, ...props }: any) => {
           height: '300px'
         }
       : {
-          'min-height': '300px'
+          minHeight: '300px'
         }
   )
 
@@ -24,10 +24,10 @@ export const AppUploadImage = ({ type, title, size, ...props }: any) => {
     type === 'square'
       ? {
           width: '180px',
-          'font-size': '16px'
+          fontSize: '16px'
         }
       : {
-          'font-size': '20px'
+          fontSize: '20px'
         }
   )
 

@@ -3,3 +3,19 @@
   flex-wrap: wrap;
   gap: 30px;
 }
+
+.container__form {
+  background-color: $light;
+  background-color: $white;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: $background-drop-shadow;
+}
+
+.btn__create-form {
+  height: 40px;
+}
+.text__create-form {
+  font-weight: $font-bold;
+  font-size: $text-sm;
+}

@@ -18,7 +18,7 @@ const Layout = () => {
       <Sidebar />
       <AppShellMain className={classes.container}>
         <Box className={classes.content}>
-          <Breadcrumb />
+          {/* <Breadcrumb /> */}
           <Box className={classes['content__main']}>
             <Outlet />
           </Box>

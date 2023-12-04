@@ -27,10 +27,6 @@
 		flex-direction: column;
     row-gap: 30px;
     &__main {
-      padding: 40px;
 			flex: 1 1 0;
-      background-color: $white;
-      border-radius: 10px;
-      box-shadow: $background-drop-shadow;
     }
 }

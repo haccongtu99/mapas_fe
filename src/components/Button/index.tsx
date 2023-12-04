@@ -6,8 +6,8 @@ import { TVariantProps } from '@/types/global'
 interface IButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: React.ReactNode | JSX.Element
   variant?: TVariantProps
-  onClick?: () => void
   active?: boolean
+  onClick?: () => void
 }
 
 type TRef = HTMLButtonElement
@@ -18,10 +18,10 @@ const Button = forwardRef<TRef, IButtonProps>(
       children,
       icon,
       variant = 'primary',
-      onClick,
       active = false,
       className = '',
-      disabled
+      disabled,
+      onClick
     },
     ref
   ) => {

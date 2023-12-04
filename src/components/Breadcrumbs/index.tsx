@@ -10,7 +10,8 @@ const PATH_TITLE = {
   [ROOT_ROUTES.STATISTIC]: 'Thống kê phân tích',
   [ROOT_ROUTES.PROJECTS]: 'Dự án',
   [ROOT_ROUTES.CLIENTS]: 'Khách hàng',
-  [PROJECTS_ROUTES.CREATE]: 'Thêm dự án'
+  [PROJECTS_ROUTES.CREATE]: 'Thêm dự án',
+  [PROJECTS_ROUTES.EDIT]: 'Cập nhật dự án'
 }
 
 const useBreadcrumb = () => {

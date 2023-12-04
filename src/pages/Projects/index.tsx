@@ -5,6 +5,7 @@ import { ProjectMainCard } from '@/modules/projects/components/ProjectMainCard'
 import classes from './Projects.module.scss'
 import { Outlet, useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import Breadcrumb from '@/components/Breadcrumbs'
 
 export const ProjectPage = () => {
   const { t } = useTranslation()
@@ -18,14 +19,17 @@ export const ProjectPage = () => {
     <Box>
       {isMainPage ? (
         <Stack>
-          <Text>{t(translation.global.projects)}</Text>
-          <Box className={classes.container}>
-            <ProjectMainCard isCreateNew="true"></ProjectMainCard>
-            <ProjectMainCard></ProjectMainCard>
-            <ProjectMainCard></ProjectMainCard>
-            <ProjectMainCard></ProjectMainCard>
-            <ProjectMainCard></ProjectMainCard>
-          </Box>
+          <Breadcrumb />
+          <Stack className={classes.container__form}>
+            <Text>{t(translation.global.projects)}</Text>
+            <Box className={classes.container}>
+              <ProjectMainCard isCreateNew="true"></ProjectMainCard>
+              <ProjectMainCard></ProjectMainCard>
+              <ProjectMainCard></ProjectMainCard>
+              <ProjectMainCard></ProjectMainCard>
+              <ProjectMainCard></ProjectMainCard>
+            </Box>
+          </Stack>
         </Stack>
       ) : (
         <Outlet />
