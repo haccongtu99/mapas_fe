@@ -1,9 +1,9 @@
 import { Outlet } from 'react-router-dom'
-import { Header } from './Header'
 import { AppShell, AppShellMain, Box } from '@mantine/core'
-import classes from './Layout.module.scss'
+import { Header } from './Header'
 import { Sidebar } from './Sidebar'
 import Breadcrumb from '../Breadcrumbs'
+import classes from './Layout.module.scss'
 
 const Layout = () => {
   return (
@@ -16,10 +16,12 @@ const Layout = () => {
     >
       <Header />
       <Sidebar />
-      <AppShellMain>
-        <Box p={40} bg="silver">
-          <Breadcrumb />
-          <Outlet />
+      <AppShellMain className={classes.container}>
+        <Box className={classes.content}>
+          {/* <Breadcrumb /> */}
+          <Box className={classes['content__main']}>
+            <Outlet />
+          </Box>
         </Box>
       </AppShellMain>
     </AppShell>

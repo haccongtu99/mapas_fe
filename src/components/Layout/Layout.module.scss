@@ -14,4 +14,19 @@
     --app-shell-navbar-offset: 240px;
     --app-shell-header-offset: 60px;
     padding: 40px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+	}
+	
+	.content {
+		flex: 1 1 0;
+    padding: 40px;
+    background-color: $background-light;
+		display: flex;
+		flex-direction: column;
+    row-gap: 30px;
+    &__main {
+			flex: 1 1 0;
+    }
 }

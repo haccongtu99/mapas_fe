@@ -1,8 +1,7 @@
 import clsx from 'clsx'
 import { FC } from 'react'
-import ProjectCard from '../ProjectCard'
-import classes from './ProjectContainer.module.scss'
-
+import HomeProjectCard from '../HomeProjectCard'
+import classes from './HomeProjectContainer.module.scss'
 export type TCardImage = {
   path: string
   title?: string
@@ -12,13 +11,13 @@ export type TCardImage = {
   numberOfImages?: number
 }
 
-type TProjectContainerProps = {
+type THomeProjectContainerProps = {
   subImage: TCardImage[]
   mainImage: TCardImage
   direction?: 'left' | 'right'
 }
 
-const ProjectContainer: FC<TProjectContainerProps> = ({
+const HomeProjectContainer: FC<THomeProjectContainerProps> = ({
   subImage,
   mainImage,
   direction = 'left'
@@ -26,7 +25,7 @@ const ProjectContainer: FC<TProjectContainerProps> = ({
   return (
     <div className={clsx(classes.container, classes[direction])}>
       <div className={clsx(classes.main)}>
-        <ProjectCard
+        <HomeProjectCard
           type={mainImage.type}
           path={mainImage.path}
           description={mainImage.description}
@@ -38,7 +37,7 @@ const ProjectContainer: FC<TProjectContainerProps> = ({
       </div>
 
       <div className={clsx(classes.sub, classes.top)}>
-        <ProjectCard
+        <HomeProjectCard
           type={subImage[0].type}
           path={subImage[0].path}
           description={subImage[0].description}
@@ -49,7 +48,7 @@ const ProjectContainer: FC<TProjectContainerProps> = ({
       </div>
 
       <div className={clsx(classes.sub, classes.bottom)}>
-        <ProjectCard
+        <HomeProjectCard
           type={subImage[1].type}
           path={subImage[1].path}
           description={subImage[1].description}
@@ -62,4 +61,4 @@ const ProjectContainer: FC<TProjectContainerProps> = ({
   )
 }
 
-export default ProjectContainer
+export default HomeProjectContainer

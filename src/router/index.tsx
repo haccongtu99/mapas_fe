@@ -19,8 +19,12 @@ export const router = createBrowserRouter([
         path: ROOT_ROUTES.PROJECTS,
         children: [
           {
-            lazy: () => import('../pages/Projects'),
+            lazy: () => import('../pages/Projects/ProjectCreateForm'),
             path: PROJECTS_ROUTES.CREATE
+          },
+          {
+            lazy: () => import('../pages/Projects/ProjectEditForm'),
+            path: PROJECTS_ROUTES.EDIT
           }
         ]
       },

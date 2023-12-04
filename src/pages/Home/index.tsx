@@ -6,7 +6,7 @@ import { IconArrowLeft } from '@tabler/icons-react'
 
 export const HomePage = () => {
   return (
-    <Stack mt={100}>
+    <Stack>
       <Flex justify="flex-start" gap={20}>
         <Button color="primary" variant="outline">
           Button

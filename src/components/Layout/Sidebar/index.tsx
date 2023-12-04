@@ -3,13 +3,12 @@ import { ROOT_ROUTES } from '@/constants'
 import { ActionIcon, AppShellNavbar, Flex, NavLink, Stack } from '@mantine/core'
 import { IconGridDots } from '@tabler/icons-react'
 import clsx from 'clsx'
-import { useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import classes from './Sidebar.module.scss'
 
 import { IconHome, IconPlus } from '@tabler/icons-react'
 
-export const navbarConfig = [
+const navbarConfig = [
   {
     mainLink: { label: 'Tổng quan', path: '' },
     icon: <IconHome size={20} color="silver" />,

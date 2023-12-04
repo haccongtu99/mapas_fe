@@ -1,4 +1,4 @@
-import { Anchor, Breadcrumbs as MantineBreadcrumbs } from '@mantine/core'
+import { Anchor, Breadcrumbs as MantineBreadcrumbs, Box } from '@mantine/core'
 import classes from './Breadcrumbs.module.scss'
 import clsx from 'clsx'
 import { useNavigate } from 'react-router-dom'
@@ -10,7 +10,8 @@ const PATH_TITLE = {
   [ROOT_ROUTES.STATISTIC]: 'Thống kê phân tích',
   [ROOT_ROUTES.PROJECTS]: 'Dự án',
   [ROOT_ROUTES.CLIENTS]: 'Khách hàng',
-  [PROJECTS_ROUTES.CREATE]: 'Thêm dự án'
+  [PROJECTS_ROUTES.CREATE]: 'Thêm dự án',
+  [PROJECTS_ROUTES.EDIT]: 'Cập nhật dự án'
 }
 
 const useBreadcrumb = () => {
@@ -44,11 +45,16 @@ const Breadcrumb = () => {
   })
 
   return (
-    <MantineBreadcrumbs
-      classNames={{ root: classes.root, breadcrumb: clsx(classes.breadcrumb) }}
-    >
-      {listItems}
-    </MantineBreadcrumbs>
+    <Box>
+      <MantineBreadcrumbs
+        classNames={{
+          root: classes.root,
+          breadcrumb: clsx(classes.breadcrumb)
+        }}
+      >
+        {listItems}
+      </MantineBreadcrumbs>
+    </Box>
   )
 }
 

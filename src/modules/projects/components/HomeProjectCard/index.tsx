@@ -1,7 +1,7 @@
 import { ImageQuantityIcon } from '@/assets'
 import { Flex } from '@mantine/core'
 import { FC, useRef } from 'react'
-import { TCardImage } from '../ProjectContainer'
+import { TCardImage } from '../HomeProjectContainer'
 import classes from './ProjectCard.module.scss'
 
 type TProjectCardProps = TCardImage & {

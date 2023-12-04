@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react'
 import { Image } from '@mantine/core'
 import useSVG from '@/assets/svg/useSVG'
+import clsx from 'clsx'
 
 type Props = {
   name: string
-  size: number | string
+  size?: number | string
   width?: number | string
   height?: number | string
   disable?: boolean
   spin?: boolean
   color?: string
+  className?: any
 }
 
 export const AppIcon = ({
@@ -18,23 +20,25 @@ export const AppIcon = ({
   height,
   size,
   color = 'defaultColor',
-  spin = false,
+  className,
   disable = false
 }: Props) => {
+  // @ts-ignore
   const [iconPath, setIconPath] = useState<any>()
   const [viewBox, setViewBox] = useState<any>('0 0 24 24')
+  // @ts-ignore
   const [widthIcon, setWidthIcon] = useState<string | number>(
-    width ? width : size
+    width ? width : size ? size : 24
   )
+  // @ts-ignore
   const [heightIcon, setHeightIcon] = useState<string | number>(
-    height ? height : size
+    height ? height : size ? size : 24
   )
   const [svgComponent, setSvgComponent] = useState<any>()
   const [spanClass, setSpanClass] = useState<string>('')
 
   const loadSvgIcon = () => {
     const icons = useSVG
-    console.log(icons, 'icons...')
     const icon = icons[name]
     if (!icon) {
       setSvgComponent(undefined)
@@ -78,11 +82,12 @@ export const AppIcon = ({
   return (
     <span
       role="image"
-      className={spanClass}
+      className={clsx(spanClass, className)}
       style={{
         width: `${widthIcon}px`,
         height: `${heightIcon}px`,
-        display: 'inline-block'
+        display: 'inline-block',
+        color: `${color}`
       }}
     >
       {svgComponent ? (
@@ -90,6 +95,7 @@ export const AppIcon = ({
           src={svgComponent}
           width={`${widthIcon}`}
           height={`${heightIcon}`}
+          color={`${color}`}
         />
       ) : (
         <svg

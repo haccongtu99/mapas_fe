@@ -1,0 +1,7 @@
+@mixin upload-label {
+  font-size: $text-base;
+  color: $gray-text-100;
+  font-weight: $font-normal;
+  // font-size: $text-xl;
+  line-height: 24px; /* 120% */
+}

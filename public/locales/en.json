@@ -166,5 +166,17 @@
       "buyGroupMember": "Buy group members",
       "monthlyLike": "Monthly likes"
     }
+  },
+  "common": {
+    "requiredField": "Required field",
+    "description": "Description",
+    "dragDropLabel": "Upload or Drag/drop the image/video here",
+    "coverPhoto": "Cover Photo"
+  },
+  "projects": {
+    "title": "Title of projects"
+  },
+  "client": {
+    "client": "Client"
   }
 }
