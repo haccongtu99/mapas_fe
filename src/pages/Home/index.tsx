@@ -1,6 +1,4 @@
-import { FaceBookLogo } from '@/assets'
 import CustomButton from '@/components/Button'
-import ProjectSection from '@/modules/projects/components/ProjectSection'
 import { Button, Flex, Stack, Text, Title } from '@mantine/core'
 import { IconArrowLeft } from '@tabler/icons-react'
 
@@ -42,7 +40,6 @@ export const HomePage = () => {
       <Title size="h6" c="primary">
         Custom logo with svgr
       </Title>
-      <FaceBookLogo />
       <Title size="h6" c="primary">
         Logo from lib
       </Title>
@@ -51,8 +48,6 @@ export const HomePage = () => {
       <CustomButton variant="outline">Custom button outline</CustomButton>
       <CustomButton variant="primary">Custom button filled</CustomButton>
       <CustomButton variant="default">Custom button default</CustomButton>
-
-      <ProjectSection />
     </Stack>
   )
 }

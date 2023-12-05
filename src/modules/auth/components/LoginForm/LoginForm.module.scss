@@ -1,0 +1,63 @@
+.form-container {
+    background-color: $black;
+    opacity: 0.8;
+    border-radius: 30px;
+    padding: 60px;
+    justify-content: center;
+    align-items: center;
+
+    .completed-icon {
+        color: $black;
+        font-size: $text-2xl;
+        font-weight: $font-bold;
+    }
+
+    .root {
+        @include flex-center;
+        flex-direction: column;
+    }
+
+    .steps {
+        width: 200px;
+    }
+
+    .stepLabel {
+        display: none;
+    }
+
+    .stepIcon {
+        border: none;
+        background-color: $gray-400;
+        font-size: $text-2xl;
+        font-weight: $font-bold;
+
+        &[data-completed] {
+            background-color: $input-border;
+        }
+    }
+
+    .separator {
+        background-color: $input-border;
+    }
+
+    .check-icon {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background: $gradient-background;
+    }
+}
+
+.left-section {
+    max-width: 322px;
+
+    .title {
+        font-size: 60px;
+        line-height: normal;
+    }
+
+    .description {
+        font-size: $text-2xl;
+        line-height: 34px;
+    }
+}

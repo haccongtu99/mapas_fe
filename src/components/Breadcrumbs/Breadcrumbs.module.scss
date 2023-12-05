@@ -3,13 +3,10 @@
     .breadcrumb {
         color: var(--mantine-color-gray-4);
         font-weight: $font-bold;
+        font-size: $text-xl;
     }
 
     .active {
         color: var(--mantine-color-black);
-    }
-
-    .label {
-        font-size: $text-xl;
     }
 }

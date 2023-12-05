@@ -1,10 +1,12 @@
-import { createBrowserRouter } from 'react-router-dom'
+import ErrorBoundary from '@/components/ErrorBoundary'
 import Layout from '@/components/Layout'
 import { PROJECTS_ROUTES, ROOT_ROUTES } from '@/constants/routesString'
+import { createBrowserRouter } from 'react-router-dom'
 
 export const router = createBrowserRouter([
   {
     element: <Layout />,
+    errorElement: <ErrorBoundary />,
     children: [
       {
         lazy: () => import('../pages/Home'),
@@ -33,6 +35,11 @@ export const router = createBrowserRouter([
         path: ROOT_ROUTES.CLIENTS
       }
     ]
+  },
+  {
+    path: ROOT_ROUTES.LOGIN,
+    lazy: () => import('../pages/Login'),
+    errorElement: <ErrorBoundary />
   },
   { path: ROOT_ROUTES.NOT_FOUND, lazy: () => import('../pages/NotFound') }
 ])

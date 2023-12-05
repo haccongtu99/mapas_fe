@@ -1,7 +1,7 @@
-import { Anchor, Breadcrumbs as MantineBreadcrumbs, Box } from '@mantine/core'
-import classes from './Breadcrumbs.module.scss'
+import { Anchor, Breadcrumbs as MantineBreadcrumbs } from '@mantine/core'
 import clsx from 'clsx'
 import { useNavigate } from 'react-router-dom'
+import classes from './Breadcrumbs.module.scss'
 
 import { PROJECTS_ROUTES, ROOT_ROUTES } from '@/constants'
 import { useLocation } from 'react-router-dom'
@@ -35,7 +35,7 @@ const Breadcrumb = () => {
 
     return (
       <Anchor
-        onClick={() => navigate(item.path)}
+        onClick={() => navigate(`/${item.path}`)}
         key={index}
         classNames={{ root: clsx(activeAnchor && classes.active) }}
       >
@@ -45,16 +45,14 @@ const Breadcrumb = () => {
   })
 
   return (
-    <Box>
-      <MantineBreadcrumbs
-        classNames={{
-          root: classes.root,
-          breadcrumb: clsx(classes.breadcrumb)
-        }}
-      >
-        {listItems}
-      </MantineBreadcrumbs>
-    </Box>
+    <MantineBreadcrumbs
+      classNames={{
+        root: classes.root,
+        breadcrumb: clsx(classes.breadcrumb)
+      }}
+    >
+      {listItems}
+    </MantineBreadcrumbs>
   )
 }
 

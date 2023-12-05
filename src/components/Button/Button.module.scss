@@ -42,11 +42,13 @@ button {
 }
 
 .outline {
-    background-color: $white;
-    border: 1px solid var(--mantine-color-primary-4);
+    background-color: transparent;
+    color: $white;
+    border: 1px solid $input-border;
     &:hover {
         background: $gradient-background;
         border: 1px solid $secondary-gradient;
+        color: $black;
     }
 }
 

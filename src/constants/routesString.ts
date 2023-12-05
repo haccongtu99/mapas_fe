@@ -1,4 +1,5 @@
 export const ROOT_ROUTES = {
+  LOGIN: 'login',
   HOME: '',
   OVERVIEW: 'overview',
   STATISTIC: 'statistic',

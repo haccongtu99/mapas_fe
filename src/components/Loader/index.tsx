@@ -1,7 +1,7 @@
-import { forwardRef } from 'react'
+import { MapasLottie } from '@/assets'
 import { MantineLoaderComponent } from '@mantine/core'
-import mapasLottie from '@/assets/mapas-lottie.gif'
+import { forwardRef } from 'react'
 
 export const MapasLoader: MantineLoaderComponent = forwardRef((_, ref) => (
-  <img src={mapasLottie} ref={ref} width={120} height={120} />
+  <img src={MapasLottie} ref={ref} width={120} height={120} />
 ))

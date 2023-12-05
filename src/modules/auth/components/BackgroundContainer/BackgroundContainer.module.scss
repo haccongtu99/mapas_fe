@@ -1,0 +1,26 @@
+.container {
+    background-color: $black;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+
+    .background {
+        height: 100vh;
+        object-fit: cover;
+        position: absolute;
+        right: 0;
+        left: 0;
+        margin: 0 auto;
+
+        animation: blink infinite 5s;
+    }
+    
+    .content {
+        position: absolute;
+        right: 0;
+        left: 0;
+        top: 50%;
+        margin: auto;
+        transform: translateY(-50%);
+    }
+}
