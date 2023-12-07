@@ -5,5 +5,5 @@ export type TProject = {
   avatar?: string
   description?: string
   client: string
-  images: TProjectImages[]
+  images?: TProjectImages[]
 }

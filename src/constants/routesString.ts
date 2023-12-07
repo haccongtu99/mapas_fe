@@ -11,5 +11,5 @@ export const ROOT_ROUTES = {
 
 export const PROJECTS_ROUTES = {
   CREATE: 'create',
-  EDIT: 'edit'
+  EDIT: 'edit/:id'
 }

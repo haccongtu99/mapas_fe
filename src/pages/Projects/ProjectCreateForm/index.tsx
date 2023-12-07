@@ -13,36 +13,47 @@ import Breadcrumb from '@/components/Breadcrumbs'
 import classes from '../Projects.module.scss'
 import Button from '@/components/Button'
 import { useEffect, useState } from 'react'
+import { ProjectQuery } from '@/modules/projects/services/hook'
 
 export const ProjectCreateForm = () => {
   const { t } = useTranslation()
-  const [projectData, setProjectData] = useState<TProject>()
+  const projectQuery = new ProjectQuery()
+  const { data, isSuccess, mutate } = projectQuery.useCreateProject()
+  const form = useProjectCreateNewForm({
+    initialValues: { ...initialProjectFormValues }
+  })
+
   const label = {
     title: t(translation.projects.title),
     client: t(translation.client.client),
     description: t(translation.common.description)
   }
-  const form = useProjectCreateNewForm({
-    initialValues: { ...initialProjectFormValues }
-  })
+
+  const [projectData, setProjectData] = useState<TProject>()
+
   const updateInput = (data: {
     field: keyof TProject
     value: string | number
   }) => {
-    console.log(data, 'updateInput....')
-    form.setValues({
-      [data.field]: data.value
-    })
+    form.setValues({ [data.field]: data.value })
   }
 
   const onCreateNewProject = () => {
-    console.log(projectData, 'projectData...')
+    if (projectData) {
+      console.log(projectData, 'projectData...')
+      mutate(projectData)
+    }
   }
 
   useEffect(() => {
-    console.log(form.values, 'form.values.dataForm...')
     setProjectData(form.values as unknown as TProject)
   }, [form.values])
+
+  useEffect(() => {
+    if (isSuccess) {
+      console.log('Create Update Product Success!')
+    }
+  }, [isSuccess])
 
   return (
     <ProjectCreateNewProvider form={form}>
