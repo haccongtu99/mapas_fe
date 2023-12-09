@@ -15,6 +15,7 @@ export const ProjectPage = () => {
   useEffect(() => {
     setIsMainPage(location.pathname === '/projects')
   }, [location])
+
   return (
     <Box>
       {isMainPage ? (

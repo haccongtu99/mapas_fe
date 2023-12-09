@@ -12,7 +12,7 @@ export const ProjectMainCard = ({ isCreateNew = false }: any) => {
 
   const onEditProjects = () => {
     console.log('onEditProjects...')
-    navigate('/projects/edit')
+    navigate(`/projects/edit/${123}`)
   }
 
   const onCreateNewProject = () => {

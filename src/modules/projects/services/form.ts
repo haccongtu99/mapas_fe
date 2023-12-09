@@ -2,9 +2,9 @@ import { createFormContext } from '@mantine/form'
 import { TProject } from '../types'
 
 export const initialProjectFormValues: TProject = {
-  name: '',
-  client: '',
-  images: []
+  name: 'Name 1',
+  client: 'Name 2',
+  description: 'Mô tả 1'
 }
 
 export const [
@@ -13,14 +13,14 @@ export const [
   useProjectCreateNewForm
 ] = createFormContext<TProject>()
 
-export const initialProjectDetailsFormValues: TProject = {
-  name: '',
-  client: '',
-  images: []
+export const initialProjectInfosFormValues: TProject = {
+  name: 'Name 1',
+  client: 'Name 2',
+  description: 'Mô tả 1'
 }
 
 export const [
-  ProjectDetailsProvider,
-  userProjectDetailFormContext,
-  useProjectDetailForm
+  ProjectInfosProvider,
+  useProjectDetailFormContext,
+  useProjectInfosForm
 ] = createFormContext<TProject>()

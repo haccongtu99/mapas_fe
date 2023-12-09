@@ -28,6 +28,7 @@ type TypeInputProps = Pick<
   | 'typeInput'
   | 'placeholder'
   | 'field'
+  | 'value'
   | 'isActiveInput'
   | 'updateInput'
   | 'classNames'
@@ -42,19 +43,25 @@ export const TypeInput = ({
   isActiveInput,
   classNames,
   isImperative,
-  updateInput,
-  setInvalidInput
+  value,
+  updateInput
 }: TypeInputProps) => {
   const { t } = useTranslation()
+  const [tempValue, setTempValue] = useState<string>('')
 
   const onUpdateInput = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { value } = event.target
     updateInput({
       field,
-      value
+      value: tempValue
     })
+  }
+
+  const onChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setTempValue(event.target.value)
   }
 
   switch (typeInput) {
@@ -67,6 +74,9 @@ export const TypeInput = ({
           }}
           placeholder={placeholder}
           disabled={!isActiveInput}
+          // defaultValue={'123'}
+          // value={value}
+          onChange={onChange}
           onBlur={onUpdateInput}
         />
       )
@@ -78,6 +88,9 @@ export const TypeInput = ({
           }}
           placeholder={placeholder}
           disabled={!isActiveInput}
+          // defaultValue={'123'}
+          // value={value}
+          onChange={onChange}
           onBlur={onUpdateInput}
         />
       )
@@ -89,6 +102,9 @@ export const TypeInput = ({
           }}
           placeholder={placeholder}
           disabled={!isActiveInput}
+          // defaultValue={'123'}
+          // value={value}
+          onChange={onChange}
           onBlur={onUpdateInput}
         />
       )
@@ -103,7 +119,7 @@ export const AppInput = ({
   isImperative = false,
   hiddenToggleIcon = false,
   moreOptions,
-  value,
+  value = '',
   classNames,
   checkIsFocused,
   updateInput,
@@ -146,6 +162,7 @@ export const AppInput = ({
         isActiveInput={isActive}
         classNames={classNames}
         isImperative={isImperative}
+        value={value}
         updateInput={changeParentInput}
         setInvalidInput={setInvalidInput}
       />

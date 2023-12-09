@@ -1,33 +1,38 @@
-import { customAxios } from '.'
-
+import customAxios from './axios'
 export default class Api {
-  protected async get(url: string) {
-    const res = await customAxios.get(url)
+  protected async get(url: string, configs?: any) {
+    const res = await customAxios.get(url, configs)
     return res.data
   }
 
   protected async post(
     url: string,
-    input?: Record<string, unknown>,
-    headersType?: string
+    input?: Record<string, unknown> | any,
+    configs?: any
   ) {
-    if (headersType) {
-      const res = await customAxios.post(url, input, {
-        headers: { 'Content-Type': 'multipart/form-res' }
-      })
+    if (configs) {
+      const res = await customAxios.post(url, input, configs)
       return res.data
     }
     const res = await customAxios.post(url, input)
     return res.data
   }
 
-  protected async patch(url: string, input?: Record<string, unknown>) {
+  protected async patch(
+    url: string,
+    input?: Record<string, unknown>,
+    configs?: any
+  ) {
+    if (configs) {
+      const res = await customAxios.post(url, input, configs)
+      return res.data
+    }
     const res = await customAxios.patch(url, input)
     return res.data
   }
 
-  protected async delete(url: string) {
-    const res = await customAxios.delete(url)
+  protected async delete(url: string, configs?: any) {
+    const res = await customAxios.delete(url, configs)
     return res.data
   }
 }

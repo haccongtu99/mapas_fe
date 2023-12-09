@@ -12,6 +12,7 @@ type Props = {
   spin?: boolean
   color?: string
   className?: any
+  onClick?: () => void
 }
 
 export const AppIcon = ({
@@ -21,16 +22,14 @@ export const AppIcon = ({
   size,
   color = 'defaultColor',
   className,
-  disable = false
+  disable = false,
+  onClick
 }: Props) => {
-  // @ts-ignore
   const [iconPath, setIconPath] = useState<any>()
   const [viewBox, setViewBox] = useState<any>('0 0 24 24')
-  // @ts-ignore
   const [widthIcon, setWidthIcon] = useState<string | number>(
     width ? width : size ? size : 24
   )
-  // @ts-ignore
   const [heightIcon, setHeightIcon] = useState<string | number>(
     height ? height : size ? size : 24
   )
@@ -71,7 +70,6 @@ export const AppIcon = ({
   useEffect(() => {
     loadSvgIcon()
     loadSizeIcon()
-    // loadIconPath();
     loadSpanClass()
   }, [])
 
@@ -96,17 +94,20 @@ export const AppIcon = ({
           width={`${widthIcon}`}
           height={`${heightIcon}`}
           color={`${color}`}
+          onClick={onClick}
         />
       ) : (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox={viewBox}
-          fill={color}
-          width={`${widthIcon}`}
-          height={`${heightIcon}`}
-        >
-          <path d={iconPath}></path>
-        </svg>
+        <div onClick={onClick}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox={viewBox}
+            fill={color}
+            width={`${widthIcon}`}
+            height={`${heightIcon}`}
+          >
+            <path d={iconPath}></path>
+          </svg>
+        </div>
       )}
     </span>
   )
