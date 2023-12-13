@@ -3,7 +3,7 @@ import { create } from 'zustand'
 type State = {
   states: {
     email: string
-    password: string
+    password?: string
     accessToken?: string
     refreshToken?: string
   }

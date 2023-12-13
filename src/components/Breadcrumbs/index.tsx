@@ -1,10 +1,8 @@
+import { useNavigate, useLocation } from 'react-router-dom'
 import { Anchor, Breadcrumbs as MantineBreadcrumbs } from '@mantine/core'
-import clsx from 'clsx'
-import { useNavigate } from 'react-router-dom'
-import classes from './Breadcrumbs.module.scss'
-
 import { PROJECTS_ROUTES, ROOT_ROUTES } from '@/constants'
-import { useLocation } from 'react-router-dom'
+import clsx from 'clsx'
+import classes from './Breadcrumbs.module.scss'
 
 const PATH_TITLE = {
   [ROOT_ROUTES.STATISTIC]: 'Thống kê phân tích',
@@ -17,10 +15,20 @@ const PATH_TITLE = {
 const useBreadcrumb = () => {
   const { pathname } = useLocation()
   const pathList = pathname.split('/').filter(t => t)
-  const activeBreadcrumb = pathList[pathList.length - 1]
 
-  const breadcrumb = pathList.map(path => ({
-    label: PATH_TITLE[path],
+  const nestPathList = pathList
+    .reduce(
+      (prev, cur, index) => {
+        prev.push(`${prev[index]}/${cur}`)
+        return prev
+      },
+      ['']
+    )
+    .filter(t => t)
+
+  const activeBreadcrumb = nestPathList[nestPathList.length - 1]
+  const breadcrumb = nestPathList.map((path, index) => ({
+    label: PATH_TITLE[pathList[index]] ?? pathList[index],
     path: path
   }))
 
@@ -30,12 +38,18 @@ const useBreadcrumb = () => {
 const Breadcrumb = () => {
   const navigate = useNavigate()
   const { breadcrumb, activeBreadcrumb } = useBreadcrumb()
+  const onNavigate = (path: string) => {
+    if (activeBreadcrumb === path) {
+      return
+    }
+    navigate(`${path}`)
+  }
   const listItems = breadcrumb.map((item, index) => {
     const activeAnchor = activeBreadcrumb === item.path
 
     return (
       <Anchor
-        onClick={() => navigate(`/${item.path}`)}
+        onClick={() => onNavigate(item.path)}
         key={index}
         classNames={{ root: clsx(activeAnchor && classes.active) }}
       >

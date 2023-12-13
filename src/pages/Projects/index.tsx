@@ -1,19 +1,26 @@
+import { useEffect, useState } from 'react'
+import { Outlet, useLocation } from 'react-router-dom'
 import { Box, Stack, Text } from '@mantine/core'
 import { useTranslation } from 'react-i18next'
 import { translation } from '@/configs/i18n/i18n'
 import { ProjectMainCard } from '@/modules/projects/components/ProjectMainCard'
-import classes from './Projects.module.scss'
-import { Outlet, useLocation } from 'react-router-dom'
-import { useEffect, useState } from 'react'
 import Breadcrumb from '@/components/Breadcrumbs'
+import classes from './Projects.module.scss'
+import useFetchProject from '@/modules/projects/composables/useFetchProject'
 
 export const ProjectPage = () => {
   const { t } = useTranslation()
   const location = useLocation()
   const [isMainPage, setIsMainPage] = useState<boolean>(false)
+  const { getAllProjects } = useFetchProject()
+  const { data: projects, refetch } = getAllProjects()
 
   useEffect(() => {
-    setIsMainPage(location.pathname === '/projects')
+    const isMainPage = location.pathname === '/projects'
+    if (isMainPage) {
+      refetch()
+    }
+    setIsMainPage(isMainPage)
   }, [location])
 
   return (
@@ -21,14 +28,15 @@ export const ProjectPage = () => {
       {isMainPage ? (
         <Stack>
           <Breadcrumb />
-          <Stack className={classes.container__form}>
-            <Text>{t(translation.global.projects)}</Text>
+          <Stack className={classes.container__form} gap={25}>
+            <Text className={classes.container__title}>
+              {t(translation.global.projects)}
+            </Text>
             <Box className={classes.container}>
-              <ProjectMainCard isCreateNew="true"></ProjectMainCard>
-              <ProjectMainCard></ProjectMainCard>
-              <ProjectMainCard></ProjectMainCard>
-              <ProjectMainCard></ProjectMainCard>
-              <ProjectMainCard></ProjectMainCard>
+              <ProjectMainCard isCreateNew={true} />
+              {projects?.map((item: any, index: number) => (
+                <ProjectMainCard infos={item} key={index} />
+              ))}
             </Box>
           </Stack>
         </Stack>

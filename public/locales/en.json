@@ -171,7 +171,9 @@
     "requiredField": "Required field",
     "description": "Description",
     "dragDropLabel": "Upload or Drag/drop the image/video here",
-    "coverPhoto": "Cover Photo"
+    "coverPhoto": "Cover Photo",
+    "invalidValue": "Value is must not be empty!"
+    
   },
   "projects": {
     "title": "Title of projects"

@@ -31,7 +31,11 @@ const LoginForm = () => {
   const handleOnSubmit = async () => {
     const data = await authApi.login(authForm as TAuthLogin)
     if (data.accessToken) {
-      authStores.setAuth(data)
+      authStores.setAuth({
+        accessToken: data.accessToken as string,
+        refreshToken: data.refreshToken as string,
+        email: data.data.email as string
+      })
       storage.setToken(data.accessToken)
       storage.setRefreshToken(data.refreshToken)
       nextStep()

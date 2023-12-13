@@ -5,35 +5,61 @@ import classes from './UploadImage.module.scss'
 import { useTranslation } from 'react-i18next'
 import { translation } from '@/configs/i18n/i18n'
 import { AppIcon } from '../AppIcon'
+import { blobToBase64 } from '@/utils/string-utils'
 
-export const AppUploadImage = ({ type, title, size, ...props }: any) => {
+type TAppUploadImage = {
+  type?: string
+  title?: string | any
+  size?: string
+  onChange: (data: any) => void
+}
+
+export const AppUploadImage = ({
+  type = 'square',
+  title,
+  size,
+  onChange,
+  ...props
+}: TAppUploadImage) => {
   const { t } = useTranslation()
   const acceptType = [MIME_TYPES.png, MIME_TYPES.jpeg, MIME_TYPES.svg]
   const [sizeDropzone, setSizeDropzone] = useState<Record<string, string>>(
     type === 'square'
-      ? {
-          width: '300px',
-          height: '300px'
-        }
-      : {
-          minHeight: '300px'
-        }
+      ? { width: '300px', height: '300px' }
+      : { minHeight: '300px' }
   )
-
   const [styleDropLabel, setStyleDropLabel] = useState<Record<string, string>>(
     type === 'square'
-      ? {
-          width: '180px',
-          fontSize: '16px'
-        }
-      : {
-          fontSize: '20px'
-        }
+      ? { width: '180px', fontSize: '16px' }
+      : { fontSize: '20px' }
   )
+  const [fileStores, setFileStores] = useState<File[]>([])
+  const [filePaths, setFilePaths] = useState<string[]>([])
 
-  const onUploadFile = () => {
-    console.log('onUploadFile...')
+  const createLocalUrl = (file: FileWithPath) => {
+    if (!file) {
+      return ''
+    }
+    return blobToBase64(file)
   }
+
+  const onUploadFile = async (event: FileWithPath[]) => {
+    const newFilesPath = [...filePaths]
+    const newFiles = [...fileStores]
+    console.log('onUploadFile...')
+    newFilesPath.push((await createLocalUrl(event[0])) as string)
+    newFiles.push(event[0] as FileWithPath)
+  }
+
+  const removeUploadFile = (data: any) => {
+    const newFilesPath = [...filePaths]
+    const newFiles = [...fileStores]
+    // const removedFile = newFilesPath.findIndex((path: string) => path === '')
+  }
+
+  useEffect(() => {
+    console.log(fileStores, filePaths, '')
+  }, [fileStores, filePaths])
 
   return (
     <Box className={classes.container}>
@@ -46,7 +72,7 @@ export const AppUploadImage = ({ type, title, size, ...props }: any) => {
             inner: classes['add__zone-inner']
           }}
           accept={acceptType}
-          onDrop={onUploadFile}
+          onDrop={() => onUploadFile}
         >
           <Group
             justify="center"

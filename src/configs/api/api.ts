@@ -18,21 +18,13 @@ export default class Api {
     return res.data
   }
 
-  protected async patch(
-    url: string,
-    input?: Record<string, unknown>,
-    configs?: any
-  ) {
-    if (configs) {
-      const res = await customAxios.post(url, input, configs)
-      return res.data
-    }
+  protected async patch(url: string, input?: Record<string, unknown>) {
     const res = await customAxios.patch(url, input)
     return res.data
   }
 
-  protected async delete(url: string, configs?: any) {
-    const res = await customAxios.delete(url, configs)
+  protected async delete(url: string) {
+    const res = await customAxios.delete(url)
     return res.data
   }
 }

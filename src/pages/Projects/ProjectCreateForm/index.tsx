@@ -1,7 +1,8 @@
+import { useEffect, useState } from 'react'
 import { Box, Flex, Stack, Text } from '@mantine/core'
+import { useTranslation } from 'react-i18next'
 import { AppInput } from '@/components/AppInput'
 import { AppUploadImage } from '@/components/AppUploadImage'
-import { useTranslation } from 'react-i18next'
 import { translation } from '@/configs/i18n/i18n'
 import {
   ProjectCreateNewProvider,
@@ -12,15 +13,19 @@ import { TProject } from '@/modules/projects/types'
 import Breadcrumb from '@/components/Breadcrumbs'
 import classes from '../Projects.module.scss'
 import Button from '@/components/Button'
-import { useEffect, useState } from 'react'
-import { ProjectQuery } from '@/modules/projects/services/hook'
+import { projectQueryService } from '@/modules/projects/services/hook'
+import { AppLayout } from '@/components/AppLayout'
 
 export const ProjectCreateForm = () => {
   const { t } = useTranslation()
-  const projectQuery = new ProjectQuery()
-  const { data, isSuccess, mutate } = projectQuery.useCreateProject()
+  const { isSuccess, mutate } = projectQueryService.useCreateProject()
   const form = useProjectCreateNewForm({
-    initialValues: { ...initialProjectFormValues }
+    initialValues: { ...initialProjectFormValues },
+    validate: {
+      name: value => (!value ? t(translation.common.invalidValue) : null),
+      client: value => (!value ? t(translation.common.invalidValue) : null),
+      description: value => (!value ? t(translation.common.invalidValue) : null)
+    }
   })
 
   const label = {
@@ -38,11 +43,12 @@ export const ProjectCreateForm = () => {
     form.setValues({ [data.field]: data.value })
   }
 
-  const onCreateNewProject = () => {
-    if (projectData) {
-      console.log(projectData, 'projectData...')
-      mutate(projectData)
-    }
+  const updateProjectImages = (data: any) => {
+    console.log(data, 'data...')
+  }
+
+  const updateProjectAvatar = (data: any) => {
+    console.log(data, 'data....')
   }
 
   useEffect(() => {
@@ -57,50 +63,73 @@ export const ProjectCreateForm = () => {
 
   return (
     <ProjectCreateNewProvider form={form}>
-      <Stack>
-        <Flex align="center" justify="space-between">
-          <Breadcrumb />
-          <Flex>
-            <Button
-              className={classes['btn__create-form']}
-              onClick={onCreateNewProject}
-            >
-              <Text className={classes['text__create-form']}>
-                Tạo dự án mới
-              </Text>
-            </Button>
+      <form
+        onSubmit={form.onSubmit(() => {
+          mutate(projectData as TProject)
+        })}
+      >
+        <Stack>
+          <Flex align="center" justify="space-between">
+            <Breadcrumb />
+            <Flex>
+              <Button type="submit" className={classes['btn__create-form']}>
+                <Text className={classes['text__create-form']}>
+                  Tạo dự án mới
+                </Text>
+              </Button>
+            </Flex>
           </Flex>
-        </Flex>
-        <Box className={classes.container__form}>
-          {JSON.stringify(form.values)}
-          <AppUploadImage
-            title={t(translation.common.coverPhoto)}
-            type="square"
-          />
-          <AppInput
-            isImperative={true}
-            title={label.title}
-            field="name"
-            placeholder="test"
-            updateInput={updateInput}
-          />
-          <AppInput
-            isImperative={true}
-            title={label.client}
-            field="client"
-            placeholder="test"
-            updateInput={updateInput}
-          />
-          <AppInput
-            typeInput="area"
-            title={label.description}
-            field="description"
-            placeholder="test"
-            updateInput={updateInput}
-          />
-          <AppUploadImage title={t(translation.global.images)} />
-        </Box>
-      </Stack>
+          <Box className={classes.container__form}>
+            {JSON.stringify(form.values)}
+            <AppUploadImage
+              title={t(translation.common.coverPhoto)}
+              type="square"
+              onChange={() => updateProjectAvatar}
+            />
+            <AppInput
+              isImperative={true}
+              title={label.title}
+              field="name"
+              placeholder={label.title}
+              updateInput={updateInput}
+              {...form.getInputProps('name')}
+            />
+            <AppInput
+              isImperative={true}
+              title={label.client}
+              field="client"
+              placeholder={label.client}
+              updateInput={updateInput}
+              {...form.getInputProps('client')}
+            />
+            <AppInput
+              isImperative={true}
+              typeInput="area"
+              title={label.description}
+              field="description"
+              placeholder={label.description}
+              updateInput={updateInput}
+              {...form.getInputProps('description')}
+            />
+            <AppInput
+              isImperative={true}
+              typeInput="richArea"
+              title={label.description}
+              field="description"
+              placeholder={label.description}
+              updateInput={updateInput}
+              {...form.getInputProps('description')}
+            />
+            <div style={{ marginTop: '20px' }}>
+              <AppUploadImage
+                title={t(translation.global.images)}
+                onChange={() => updateProjectImages}
+              />
+            </div>
+            <AppLayout />
+          </Box>
+        </Stack>
+      </form>
     </ProjectCreateNewProvider>
   )
 }

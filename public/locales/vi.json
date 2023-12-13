@@ -171,7 +171,8 @@
     "requiredField": "Phần bắt buộc",
     "description": "Mô tả",
     "dragDropLabel": "Đăng tải hoặc kéo thả hình ảnh/video vào đây",
-    "coverPhoto": "Ảnh bìa đại diện"
+    "coverPhoto": "Ảnh bìa đại diện",
+    "invalidValue": "Giá trị không được để trống!"
   },
   "projects": {
     "title": "Tựa đề dự án"

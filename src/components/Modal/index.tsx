@@ -4,11 +4,12 @@ import { FC } from 'react'
 import classes from './Modal.module.scss'
 
 const Modal: FC<ModalProps> = ({
-  onClose,
   opened,
   children,
   title,
+  content,
   className,
+  onClose,
   ...props
 }) => {
   return (
