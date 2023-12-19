@@ -19,7 +19,14 @@ export class ProjectApi extends Api {
   }
 
   async create(input: TProject): Promise<TProject> {
-    const { data } = await this.post(`${PROJECT_ENDPOINT}/create`, input)
+    const configs = {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    }
+    const { data } = await this.post(
+      `${PROJECT_ENDPOINT}/create`,
+      input,
+      configs
+    )
     return data
   }
 

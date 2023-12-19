@@ -1,12 +1,10 @@
-// export type TProjectImages = { mainImage: string[]; subImage: string[] }
-
 export type TImageInfos = { publicId: string; url: string }
 
 export interface TProject {
   _id?: string
   id?: string
   name: string
-  avatar?: string
+  avatar?: File | any
   description?: string
   client: string
   images?: string[]
@@ -25,4 +23,9 @@ export interface TProjectInfos extends Omit<TProject, 'avatar' | 'images'> {
 
 export interface TProjectUpdate extends Omit<TProjectInfos, '_id' | '__v'> {
   id: string
+}
+
+export type TTempImageInfos = {
+  file: any[]
+  url: string[]
 }

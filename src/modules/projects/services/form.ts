@@ -2,9 +2,12 @@ import { createFormContext } from '@mantine/form'
 import { TImageInfos, TProject, TProjectInfos } from '../types'
 
 export const initialProjectFormValues: TProject = {
-  name: '',
-  client: '',
-  description: ''
+  // name: '',
+  // client: '',
+  // description: ''
+  name: 'Name 1',
+  client: 'Client 1',
+  description: 'Description 1'
 }
 
 export const [

@@ -9,12 +9,12 @@ import {
   initialProjectFormValues,
   useProjectCreateNewForm
 } from '@/modules/projects/services/form'
-import { TProject } from '@/modules/projects/types'
+import { TProject, TTempImageInfos } from '@/modules/projects/types'
 import Breadcrumb from '@/components/Breadcrumbs'
 import classes from '../Projects.module.scss'
 import Button from '@/components/Button'
 import { projectQueryService } from '@/modules/projects/services/hook'
-import { AppLayout } from '@/components/AppLayout'
+import { AppLayoutImages } from '@/components/AppLayoutImages'
 
 export const ProjectCreateForm = () => {
   const { t } = useTranslation()
@@ -43,15 +43,17 @@ export const ProjectCreateForm = () => {
     form.setValues({ [data.field]: data.value })
   }
 
-  const updateProjectImages = (data: any) => {
-    console.log(data, 'data...')
+  const updateProjectImages = (data: TTempImageInfos) => {
+    console.log(data, 'updateProjectImages...')
   }
 
-  const updateProjectAvatar = (data: any) => {
+  const updateProjectAvatar = (data: TTempImageInfos) => {
     console.log(data, 'data....')
+    form.setValues({ avatar: data.file[0] })
   }
 
   useEffect(() => {
+    console.log(form.values, 'form.values....')
     setProjectData(form.values as unknown as TProject)
   }, [form.values])
 
@@ -84,7 +86,8 @@ export const ProjectCreateForm = () => {
             <AppUploadImage
               title={t(translation.common.coverPhoto)}
               type="square"
-              onChange={() => updateProjectAvatar}
+              hasPreview={true}
+              onChange={updateProjectAvatar}
             />
             <AppInput
               isImperative={true}
@@ -122,11 +125,13 @@ export const ProjectCreateForm = () => {
             />
             <div style={{ marginTop: '20px' }}>
               <AppUploadImage
+                type="rectangle"
+                allowMultiUpload={true}
                 title={t(translation.global.images)}
-                onChange={() => updateProjectImages}
+                onChange={updateProjectImages}
               />
             </div>
-            <AppLayout />
+            <AppLayoutImages state={1} />
           </Box>
         </Stack>
       </form>

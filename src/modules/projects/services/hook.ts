@@ -49,6 +49,7 @@ export class ProjectQuery {
     return useMutation({
       mutationKey: [queryString.PROJECT],
       mutationFn: (input: TProject) => projectApi.create(input),
+      onSuccess: (data: any) => data,
       ...config
     })
   }

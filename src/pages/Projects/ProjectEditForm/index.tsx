@@ -92,6 +92,7 @@ export const ProjectUpdateForm = () => {
 
   const onChangeProjectImages = () => {
     console.log('onChangeProjectImages...')
+    // const
   }
 
   useEffect(() => {
@@ -171,6 +172,7 @@ export const ProjectUpdateForm = () => {
             />
             <div style={{ marginTop: '20px' }}>
               <AppUploadImage
+                allowMultiUpload={true}
                 title={t(translation.global.images)}
                 onChange={onChangeProjectImages}
               />
