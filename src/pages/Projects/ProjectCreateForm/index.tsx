@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Box, Flex, LoadingOverlay, Stack, Text } from '@mantine/core'
+import { Box, Flex, LoadingOverlay, Radio, Stack, Text } from '@mantine/core'
 import { notifications } from '@mantine/notifications'
 import { useTranslation } from 'react-i18next'
 import AppInput from '@/components/AppInput'
@@ -41,6 +41,7 @@ export const ProjectCreateForm = () => {
   const [projectData, setProjectData] = useState<TProject>()
   const [isLoadingCreateProject, setIsLoadingCreateProject] =
     useState<boolean>(false)
+  const [layout, setLayout] = useState<string>('1')
 
   const updateInput = (data: {
     field: keyof TProject
@@ -157,6 +158,7 @@ export const ProjectCreateForm = () => {
               />
               <div style={{ marginTop: '20px' }}>
                 <AppLayoutImages
+                  state={Number(layout)}
                   images={form.getInputProps('images').value?.url}
                   updateImages={onUpdateProjectImagesPath}
                 />
@@ -167,7 +169,17 @@ export const ProjectCreateForm = () => {
                   allowMultiUpload={true}
                   title={t(translation.global.images)}
                   onChange={updateProjectImages}
-                />
+                >
+                  <Radio.Group
+                    value={layout}
+                    onChange={setLayout}
+                    classNames={{ root: classes.radio__group }}
+                  >
+                    <Radio value="1" label="Giao diện 1" color="gray" />
+                    <Radio value="2" label="Giao diện 2" color="gray" />
+                    <Radio value="3" label="Giao diện 3" color="gray" />
+                  </Radio.Group>
+                </AppUploadImage>
               </div>
             </Box>
           </Stack>

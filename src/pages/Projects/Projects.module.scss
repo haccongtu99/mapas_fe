@@ -44,3 +44,14 @@
     background: #D8997E
   }
 }
+
+.radio__group {
+  > div {
+    display: flex;
+    gap: 5px;
+  }
+}
+
+.radio_item {
+  margin-right: 5px;
+}

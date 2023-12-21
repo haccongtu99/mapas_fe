@@ -1,6 +1,9 @@
 .layout {
   &__container {
     width: 100%;
+    background-color: $light;
+    border-radius: 10px;
+    padding: 40px;
   }
   &__images {
     display: flex;
@@ -10,6 +13,15 @@
     gap: 10px;
     .image__item {
       position: relative;
+      display: flex;
+      flex: 1 1 0;
+      &--empty {
+        flex: 1 1 0;
+        border-radius: 10px;
+        background: $white;
+        height: 300px;
+        border: 2px solid $light;
+      }
     }
     .icon__remove {
       position: absolute;

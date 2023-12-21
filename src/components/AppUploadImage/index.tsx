@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Box, Group, Stack, Text } from '@mantine/core'
+import { Box, Flex, Group, Stack, Text } from '@mantine/core'
 import { Dropzone, FileWithPath, MIME_TYPES } from '@mantine/dropzone'
 import classes from './UploadImage.module.scss'
 import { useTranslation } from 'react-i18next'
@@ -15,6 +15,7 @@ type TAppUploadImage = {
   allowMultiUpload?: boolean
   hasPreview?: boolean
   imagePreview?: string
+  children?: React.ReactNode
   onChange: (data: any) => void
 }
 
@@ -25,6 +26,7 @@ export const AppUploadImage = ({
   allowMultiUpload = false,
   hasPreview = false,
   imagePreview = undefined,
+  children,
   onChange,
   ...props
 }: TAppUploadImage) => {
@@ -80,7 +82,10 @@ export const AppUploadImage = ({
   return (
     <Box className={classes.container}>
       <Stack gap={11}>
-        <Text className={classes.title}>{title}</Text>
+        <Flex justify="space-between">
+          <Text className={classes.title}>{title}</Text>
+          {children}
+        </Flex>
         <Dropzone
           style={sizeDropzone}
           classNames={{
