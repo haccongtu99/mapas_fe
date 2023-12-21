@@ -172,7 +172,9 @@
     "description": "Description",
     "dragDropLabel": "Upload or Drag/drop the image/video here",
     "coverPhoto": "Cover Photo",
-    "invalidValue": "Value is must not be empty!"
+    "invalidValue": "Value is must not be empty!",
+    "createProjectSuccess": "Create Project Successfully!",
+    "updateProjectSuccess": "Update Project Successfully!"
     
   },
   "projects": {

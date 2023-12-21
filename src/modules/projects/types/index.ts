@@ -7,7 +7,7 @@ export interface TProject {
   avatar?: File | any
   description?: string
   client: string
-  images?: string[]
+  images?: File[] | TTempImageInfos | any
 }
 
 export interface TProjectInfos extends Omit<TProject, 'avatar' | 'images'> {

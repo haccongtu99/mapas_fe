@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ActionIcon, Box, Paper, Image, Text, Flex } from '@mantine/core'
 import { LoginBackground } from '@/assets'
-import { AppIcon } from '@/components/AppIcon'
+import AppIcon from '@/components/AppIcon'
 import { TProjectInfos } from '@/modules/projects/types'
 import classes from './ProjectMainCard.module.scss'
 
@@ -32,8 +32,7 @@ export const ProjectMainCard = ({
   }
 
   useEffect(() => {
-    // console.log(infos, 'infos....');
-    console.log(infos?.avatar, 'infos?.avatar...')
+    console.log(infos, 'infos....')
   }, [])
 
   return (

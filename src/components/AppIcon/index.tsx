@@ -15,7 +15,7 @@ type Props = {
   onClick?: () => void
 }
 
-export const AppIcon = ({
+const AppIcon = ({
   name,
   width,
   height,
@@ -112,3 +112,5 @@ export const AppIcon = ({
     </span>
   )
 }
+
+export default AppIcon

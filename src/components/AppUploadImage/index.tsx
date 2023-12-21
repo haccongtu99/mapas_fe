@@ -4,9 +4,9 @@ import { Dropzone, FileWithPath, MIME_TYPES } from '@mantine/dropzone'
 import classes from './UploadImage.module.scss'
 import { useTranslation } from 'react-i18next'
 import { translation } from '@/configs/i18n/i18n'
-import { AppIcon } from '../AppIcon'
+import AppIcon from '../AppIcon'
 import { blobToBase64 } from '@/utils/string-utils'
-import { AppPreviewUploadImage } from './AppPreviewUploadImage'
+import AppPreviewUploadImage from './AppPreviewUploadImage'
 
 type TAppUploadImage = {
   type?: string
@@ -41,22 +41,25 @@ export const AppUploadImage = ({
       : { fontSize: '20px' }
   )
 
-  const [fileStores, setFileStores] = useState<File[]>([])
+  const [fileStores, setFileStores] = useState<File[] | FileWithPath[]>([])
   const [filePaths, setFilePaths] = useState<string[]>([])
 
-  const createLocalUrl = (file: FileWithPath) => {
+  const createLocalUrl = async (file: FileWithPath) => {
     if (!file) {
       return ''
     }
-    return blobToBase64(file)
+    return await blobToBase64(file)
   }
 
   const onUploadFile = async (event: FileWithPath[]) => {
     let newFilesPaths = [...filePaths]
     let newFiles = [...fileStores]
     if (allowMultiUpload) {
-      newFilesPaths.push((await createLocalUrl(event[0])) as string)
-      newFiles.push(event[0] as FileWithPath)
+      const promises: Array<Promise<string>> = []
+      event.forEach((file: FileWithPath) => promises.push(createLocalUrl(file)))
+      const result = (await Promise.all(promises)) as string[]
+      newFilesPaths = newFilesPaths.concat([...result])
+      newFiles = newFiles.concat([...event])
     } else {
       newFilesPaths = [(await createLocalUrl(event[0])) as string]
       newFiles = [event[0] as FileWithPath]
@@ -71,7 +74,6 @@ export const AppUploadImage = ({
   }
 
   useEffect(() => {
-    console.log(fileStores, filePaths, 'fileStores, filePaths....')
     onChange({ file: fileStores, url: filePaths })
   }, [fileStores, filePaths])
 
@@ -85,7 +87,7 @@ export const AppUploadImage = ({
             root: classes.add__zone,
             inner: classes['add__zone-inner']
           }}
-          multiple={false}
+          multiple={allowMultiUpload}
           accept={acceptType}
           onDrop={onUploadFile}
         >
@@ -104,7 +106,7 @@ export const AppUploadImage = ({
           {((filePaths[filePaths.length - 1] && hasPreview) ||
             imagePreview) && (
             <AppPreviewUploadImage
-              fileURL={imagePreview ?? filePaths[filePaths.length - 1]}
+              fileURL={filePaths[filePaths.length - 1] ?? imagePreview}
               removeFile={removeUploadFile}
             />
           )}

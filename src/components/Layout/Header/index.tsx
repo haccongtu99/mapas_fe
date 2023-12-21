@@ -4,7 +4,7 @@ import storage from '@/storage'
 import { IconSearch } from '@tabler/icons-react'
 import classes from './Header.module.scss'
 import { AuthApi } from '@/modules/auth/services/api'
-import { AppIcon } from '@/components/AppIcon'
+import AppIcon from '@/components/AppIcon'
 
 export const Header = () => {
   const authApi = new AuthApi()

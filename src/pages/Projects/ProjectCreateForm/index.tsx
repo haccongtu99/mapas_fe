@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Box, Flex, Stack, Text } from '@mantine/core'
+import { Box, Flex, LoadingOverlay, Stack, Text } from '@mantine/core'
+import { notifications } from '@mantine/notifications'
 import { useTranslation } from 'react-i18next'
-import { AppInput } from '@/components/AppInput'
+import AppInput from '@/components/AppInput'
 import { AppUploadImage } from '@/components/AppUploadImage'
 import { translation } from '@/configs/i18n/i18n'
 import {
@@ -13,12 +14,15 @@ import { TProject, TTempImageInfos } from '@/modules/projects/types'
 import Breadcrumb from '@/components/Breadcrumbs'
 import classes from '../Projects.module.scss'
 import Button from '@/components/Button'
-import { projectQueryService } from '@/modules/projects/services/hook'
-import { AppLayoutImages } from '@/components/AppLayoutImages'
+import AppLayoutImages from '@/components/AppLayoutImages'
+import useHandlerProject from '@/modules/projects/composables/useHandlerProject'
+import { convertProject } from '@/modules/projects/composables/useConvertProject'
 
 export const ProjectCreateForm = () => {
   const { t } = useTranslation()
-  const { isSuccess, mutate } = projectQueryService.useCreateProject()
+  const { createProject } = useHandlerProject()
+  const { isSuccess, mutate } = createProject()
+
   const form = useProjectCreateNewForm({
     initialValues: { ...initialProjectFormValues },
     validate: {
@@ -35,6 +39,8 @@ export const ProjectCreateForm = () => {
   }
 
   const [projectData, setProjectData] = useState<TProject>()
+  const [isLoadingCreateProject, setIsLoadingCreateProject] =
+    useState<boolean>(false)
 
   const updateInput = (data: {
     field: keyof TProject
@@ -43,97 +49,129 @@ export const ProjectCreateForm = () => {
     form.setValues({ [data.field]: data.value })
   }
 
-  const updateProjectImages = (data: TTempImageInfos) => {
-    console.log(data, 'updateProjectImages...')
-  }
-
   const updateProjectAvatar = (data: TTempImageInfos) => {
-    console.log(data, 'data....')
     form.setValues({ avatar: data.file[0] })
   }
 
+  const updateProjectImages = (data: TTempImageInfos) => {
+    form.setValues({ images: data })
+  }
+
+  const onUpdateProjectImagesPath = (data: string[], index: number) => {
+    const tempFiles = form.getInputProps('images').value
+    tempFiles?.file?.splice(index, 1)
+    form.setValues({ images: { file: tempFiles, url: data } })
+  }
+
+  const onCreateProject = () => {
+    setIsLoadingCreateProject(true)
+    mutate(convertProject(projectData) as any)
+  }
+
   useEffect(() => {
-    console.log(form.values, 'form.values....')
     setProjectData(form.values as unknown as TProject)
   }, [form.values])
 
   useEffect(() => {
     if (isSuccess) {
-      console.log('Create Update Product Success!')
+      form.reset()
+      setIsLoadingCreateProject(false)
+      notifications.show({
+        color: 'lime',
+        message: t(translation.common.createProjectSuccess),
+        style: { backgroundColor: '#12B886' },
+        autoClose: 3000
+      })
     }
   }, [isSuccess])
 
   return (
     <ProjectCreateNewProvider form={form}>
       <form
-        onSubmit={form.onSubmit(() => {
-          mutate(projectData as TProject)
-        })}
+        onSubmit={form.onSubmit(() => onCreateProject())}
+        style={{ width: '100%', height: '100%' }}
       >
-        <Stack>
-          <Flex align="center" justify="space-between">
-            <Breadcrumb />
-            <Flex>
-              <Button type="submit" className={classes['btn__create-form']}>
-                <Text className={classes['text__create-form']}>
-                  Tạo dự án mới
-                </Text>
-              </Button>
-            </Flex>
-          </Flex>
-          <Box className={classes.container__form}>
-            {JSON.stringify(form.values)}
-            <AppUploadImage
-              title={t(translation.common.coverPhoto)}
-              type="square"
-              hasPreview={true}
-              onChange={updateProjectAvatar}
+        {isLoadingCreateProject ? (
+          <Box
+            pos="relative"
+            style={{ width: '100%', height: 'calc(100vh - 120px)' }}
+          >
+            <LoadingOverlay
+              visible={isLoadingCreateProject}
+              overlayProps={{ radius: 'sm', blur: 0.1 }}
             />
-            <AppInput
-              isImperative={true}
-              title={label.title}
-              field="name"
-              placeholder={label.title}
-              updateInput={updateInput}
-              {...form.getInputProps('name')}
-            />
-            <AppInput
-              isImperative={true}
-              title={label.client}
-              field="client"
-              placeholder={label.client}
-              updateInput={updateInput}
-              {...form.getInputProps('client')}
-            />
-            <AppInput
-              isImperative={true}
-              typeInput="area"
-              title={label.description}
-              field="description"
-              placeholder={label.description}
-              updateInput={updateInput}
-              {...form.getInputProps('description')}
-            />
-            <AppInput
-              isImperative={true}
-              typeInput="richArea"
-              title={label.description}
-              field="description"
-              placeholder={label.description}
-              updateInput={updateInput}
-              {...form.getInputProps('description')}
-            />
-            <div style={{ marginTop: '20px' }}>
-              <AppUploadImage
-                type="rectangle"
-                allowMultiUpload={true}
-                title={t(translation.global.images)}
-                onChange={updateProjectImages}
-              />
-            </div>
-            <AppLayoutImages state={1} />
           </Box>
-        </Stack>
+        ) : (
+          <Stack>
+            <Flex align="center" justify="space-between">
+              <Breadcrumb />
+              <Flex>
+                <Button type="submit" className={classes['btn__create-form']}>
+                  <Text className={classes['text__create-form']}>
+                    Tạo dự án mới
+                  </Text>
+                </Button>
+              </Flex>
+            </Flex>
+            <Box className={classes.container__form}>
+              {JSON.stringify(form.values)}
+              <AppUploadImage
+                title={t(translation.common.coverPhoto)}
+                type="square"
+                hasPreview={true}
+                onChange={updateProjectAvatar}
+              />
+              <AppInput
+                isImperative={true}
+                title={label.title}
+                field="name"
+                placeholder={label.title}
+                updateInput={updateInput}
+                {...form.getInputProps('name')}
+              />
+              <AppInput
+                isImperative={true}
+                title={label.client}
+                field="client"
+                placeholder={label.client}
+                updateInput={updateInput}
+                {...form.getInputProps('client')}
+              />
+              <AppInput
+                isImperative={true}
+                typeInput="area"
+                title={label.description}
+                field="description"
+                placeholder={label.description}
+                updateInput={updateInput}
+                {...form.getInputProps('description')}
+              />
+              <AppInput
+                isImperative={true}
+                typeInput="richArea"
+                title={label.description}
+                field="description"
+                placeholder={label.description}
+                updateInput={updateInput}
+                {...form.getInputProps('description')}
+              />
+              <div style={{ marginTop: '20px' }}>
+                <AppLayoutImages
+                  images={form.getInputProps('images').value?.url}
+                  updateImages={onUpdateProjectImagesPath}
+                />
+              </div>
+              <div style={{ marginTop: '20px' }}>
+                <AppUploadImage
+                  type="rectangle"
+                  allowMultiUpload={true}
+                  title={t(translation.global.images)}
+                  onChange={updateProjectImages}
+                />
+              </div>
+            </Box>
+          </Stack>
+        )}
       </form>
     </ProjectCreateNewProvider>
   )

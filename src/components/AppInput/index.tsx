@@ -117,7 +117,7 @@ export const TypeInput = ({
   }
 }
 
-export const AppInput = ({
+const AppInput = ({
   title,
   field,
   placeholder = '',
@@ -173,3 +173,5 @@ export const AppInput = ({
     </Box>
   )
 }
+
+export default AppInput

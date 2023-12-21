@@ -1,23 +1,17 @@
 import { useEffect, useState } from 'react'
 import { ActionIcon, Box, Image } from '@mantine/core'
-import { AppIcon } from '../AppIcon'
-import classes from './UploadImage.module.scss'
+import AppIcon from '../AppIcon'
 import clsx from 'clsx'
+import classes from './UploadImage.module.scss'
+import AppLayoutImages from '../AppLayoutImages'
 
-export const AppPreviewUploadImage = ({
-  fileURL,
-  className,
-  removeFile
-}: any) => {
+const AppPreviewUploadImage = ({ fileURL, className, removeFile }: any) => {
   const [isHovering, setIsHovering] = useState<boolean>(false)
 
   const onRemoveFile = (event: any) => {
     event.stopPropagation()
     removeFile()
   }
-  useEffect(() => {
-    console.log(fileURL, 'fileURL..')
-  }, [])
 
   return (
     <Box
@@ -28,7 +22,9 @@ export const AppPreviewUploadImage = ({
       onClick={event => event.stopPropagation()}
     >
       <div className={classes.image__wrapper}>
-        <Image classNames={{ root: classes.image_detail }} src={fileURL} />
+        {fileURL && (
+          <Image classNames={{ root: classes.image_detail }} src={fileURL} />
+        )}
         {isHovering && (
           <ActionIcon
             className={classes.icon__remove}
@@ -43,3 +39,5 @@ export const AppPreviewUploadImage = ({
     </Box>
   )
 }
+
+export default AppPreviewUploadImage

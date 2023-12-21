@@ -2,24 +2,26 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
 import { translation } from '@/configs/i18n/i18n'
-import { Box, Flex, Stack, Text } from '@mantine/core'
+import { Box, Flex, LoadingOverlay, Stack, Text } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import {
   ProjectInfosProvider,
   initialProjectInfosFormValues,
   useProjectInfosForm
 } from '@/modules/projects/services/form'
-import { TProjectInfos } from '@/modules/projects/types'
-import Modal from '@/components/Modal'
-import Button from '@/components/Button'
-import { AppInput } from '@/components/AppInput'
+import { TProjectInfos, TTempImageInfos } from '@/modules/projects/types'
+import useFetchProject from '@/modules/projects/composables/useFetchProject'
+import useHandlerProject from '@/modules/projects/composables/useHandlerProject'
+import { convertProject } from '@/modules/projects/composables/useConvertProject'
+import AppIcon from '@/components/AppIcon'
+import AppInput from '@/components/AppInput'
+import AppLayoutImages from '@/components/AppLayoutImages'
 import { AppUploadImage } from '@/components/AppUploadImage'
 import Breadcrumb from '@/components/Breadcrumbs'
-import { AppIcon } from '@/components/AppIcon'
-import useFetchProject from '@/modules/projects/composables/useFetchProject'
-import useEditProject from '@/modules/projects/composables/useEditProject'
-import { userConverterProject } from '@/modules/projects/composables/useConverterProject'
+import Button from '@/components/Button'
+import Modal from '@/components/Modal'
 import classes from '../Projects.module.scss'
+import { notifications } from '@mantine/notifications'
 
 export const ProjectUpdateForm = () => {
   const { id } = useParams()
@@ -40,22 +42,28 @@ export const ProjectUpdateForm = () => {
     }
   ] = useDisclosure(false)
   const { getProjectInfosById } = useFetchProject()
-  const { updateProjectById, deleteProjectById } = useEditProject()
+  const { updateProjectById, deleteProjectById } = useHandlerProject()
 
   const { data } = getProjectInfosById(id as string)
 
-  const { mutate: mutateProjectInfos } = updateProjectById()
+  const { mutate: mutateProjectInfos, isSuccess: isSuccessUpdateProject } =
+    updateProjectById()
   const { mutate: mutateProjectDelete, isSuccess: isSuccessDeleteProject } =
     deleteProjectById()
 
   const [projectData, setProjectData] = useState<TProjectInfos>()
   const [isDeletedProject, setIsDeleteProject] = useState<boolean>()
+  const [tempAvatarPreview, setTempAvatarPreview] = useState<string>()
+  const [tempImagesPreview, setTempImagesPreview] = useState<string[]>([])
+  const [isLoadingUpdateProject, setIsLoadingUpdateProject] =
+    useState<boolean>(false)
 
   const label = {
     title: t(translation.projects.title),
     client: t(translation.client.client),
     description: t(translation.common.description)
   }
+
   const form = useProjectInfosForm({
     initialValues: { ...initialProjectInfosFormValues },
     validate: {
@@ -75,8 +83,10 @@ export const ProjectUpdateForm = () => {
   }
 
   const onUpdateProject = () => {
-    const convertedProject = userConverterProject(
-      projectData as TProjectInfos
+    setIsLoadingUpdateProject(true)
+    const convertedProject = convertProject(
+      projectData,
+      'update'
     ) as TProjectInfos
     mutateProjectInfos(convertedProject)
   }
@@ -86,13 +96,15 @@ export const ProjectUpdateForm = () => {
     mutateProjectDelete(projectData?._id as string)
   }
 
-  const onChangeProjectAvatar = () => {
-    console.log('onChangeProjectAvatar...')
+  const updateProjectAvatar = (data: TTempImageInfos) => {
+    form.setValues({ avatar: data.file[0] })
+    setTempAvatarPreview('')
   }
 
-  const onChangeProjectImages = () => {
-    console.log('onChangeProjectImages...')
-    // const
+  const onUpdateProjectImagesPath = (data: string[], index: number) => {
+    const tempFiles = form.getInputProps('images').value
+    tempFiles?.file?.splice(index, 1)
+    form.setValues({ images: tempFiles })
   }
 
   useEffect(() => {
@@ -102,6 +114,8 @@ export const ProjectUpdateForm = () => {
   useEffect(() => {
     if (data) {
       form.setValues({ ...data } as unknown as TProjectInfos)
+      setTempAvatarPreview(data.avatar.url)
+      setTempImagesPreview(data.images?.map((item: any) => item?.url))
     }
   }, [data])
 
@@ -118,67 +132,99 @@ export const ProjectUpdateForm = () => {
     }
   }, [openedSuccessDeleteProjectModal])
 
+  useEffect(() => {
+    if (isSuccessUpdateProject) {
+      setIsLoadingUpdateProject(false)
+      notifications.show({
+        color: 'lime',
+        message: t(translation.common.updateProjectSuccess),
+        style: { backgroundColor: '#12B886' },
+        autoClose: 3000
+      })
+    }
+  }, [isSuccessUpdateProject])
+
   return (
     <ProjectInfosProvider form={form}>
       <form onSubmit={form.onSubmit(() => onUpdateProject())}>
-        <Stack>
-          <Flex align="center" justify="space-between">
-            <Breadcrumb />
-            <Flex align="center" columnGap={10}>
-              <Button type="submit" className={classes['btn__create-form']}>
-                <Text className={classes['text__create-form']}>
-                  Cập nhật dự án
-                </Text>
-              </Button>
-              <div
-                style={{ display: 'flex', alignItems: 'center' }}
-                onClick={openConfirmDeleteProjectModal}
-              >
-                <AppIcon name="delete-light" width={16} height={18} />
-              </div>
-            </Flex>
-          </Flex>
-          <Box className={classes.container__form}>
-            {JSON.stringify(form.values)}
-            <AppUploadImage
-              title={t(translation.common.coverPhoto)}
-              type="square"
-              onChange={onChangeProjectAvatar}
+        {isLoadingUpdateProject ? (
+          <Box
+            pos="relative"
+            style={{ width: '100%', height: 'calc(100vh - 120px)' }}
+          >
+            <LoadingOverlay
+              visible={isLoadingUpdateProject}
+              overlayProps={{ radius: 'sm', blur: 0.1 }}
             />
-            <AppInput
-              isImperative={true}
-              title={label.title}
-              field="name"
-              placeholder="Tên"
-              updateInput={updateInput}
-              {...form.getInputProps('name')}
-            />
-            <AppInput
-              isImperative={true}
-              title={label.client}
-              field="client"
-              placeholder="Khách hàng"
-              updateInput={updateInput}
-              {...form.getInputProps('client')}
-            />
-            <AppInput
-              isImperative={true}
-              typeInput="area"
-              title={label.description}
-              field="description"
-              placeholder="Mô tả"
-              updateInput={updateInput}
-              {...form.getInputProps('description')}
-            />
-            <div style={{ marginTop: '20px' }}>
-              <AppUploadImage
-                allowMultiUpload={true}
-                title={t(translation.global.images)}
-                onChange={onChangeProjectImages}
-              />
-            </div>
           </Box>
-        </Stack>
+        ) : (
+          <Stack>
+            <Flex align="center" justify="space-between">
+              <Breadcrumb />
+              <Flex align="center" columnGap={10}>
+                <Button type="submit" className={classes['btn__create-form']}>
+                  <Text className={classes['text__create-form']}>
+                    Cập nhật dự án
+                  </Text>
+                </Button>
+                <div
+                  style={{ display: 'flex', alignItems: 'center' }}
+                  onClick={openConfirmDeleteProjectModal}
+                >
+                  <AppIcon name="delete-light" width={16} height={18} />
+                </div>
+              </Flex>
+            </Flex>
+            <Box className={classes.container__form}>
+              {JSON.stringify(form.values)}
+              <AppUploadImage
+                imagePreview={tempAvatarPreview}
+                title={t(translation.common.coverPhoto)}
+                hasPreview={true}
+                onChange={updateProjectAvatar}
+              />
+              <AppInput
+                isImperative={true}
+                title={label.title}
+                field="name"
+                placeholder="Tên"
+                updateInput={updateInput}
+                {...form.getInputProps('name')}
+              />
+              <AppInput
+                isImperative={true}
+                title={label.client}
+                field="client"
+                placeholder="Khách hàng"
+                updateInput={updateInput}
+                {...form.getInputProps('client')}
+              />
+              <AppInput
+                isImperative={true}
+                typeInput="area"
+                title={label.description}
+                field="description"
+                placeholder="Mô tả"
+                updateInput={updateInput}
+                {...form.getInputProps('description')}
+              />
+              <div style={{ marginTop: '20px' }}>
+                <AppLayoutImages
+                  images={tempImagesPreview}
+                  updateImages={onUpdateProjectImagesPath}
+                />
+              </div>
+              <div style={{ marginTop: '20px' }}>
+                <AppUploadImage
+                  type="rectangle"
+                  allowMultiUpload={true}
+                  title={t(translation.global.images)}
+                  onChange={updateProjectAvatar}
+                />
+              </div>
+            </Box>
+          </Stack>
+        )}
       </form>
       <Modal
         opened={openedConfirmDeleteProjectModal}
