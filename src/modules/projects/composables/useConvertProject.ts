@@ -13,6 +13,12 @@ export const convertProject = (
         for (let i = 0; i < imagesFile.length; i++) {
           formData.append(key, imagesFile[i] as File)
         }
+      } else if (key === 'layout') {
+        for (let i = 0; i < project?.layout.length; i++) {
+          for (let j = 0; j < project?.layout[i].length; j++) {
+            formData.append(`layout[${i}][${j}]`, project?.layout[i][j])
+          }
+        }
       } else {
         formData.append(key, project[key])
       }

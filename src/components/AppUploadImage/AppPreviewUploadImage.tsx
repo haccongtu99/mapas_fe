@@ -23,7 +23,11 @@ const AppPreviewUploadImage = ({ fileURL, className, removeFile }: any) => {
     >
       <div className={classes.image__wrapper}>
         {fileURL && (
-          <Image classNames={{ root: classes.image_detail }} src={fileURL} />
+          <Image
+            classNames={{ root: classes.image_detail }}
+            src={fileURL}
+            radius={10}
+          />
         )}
         {isHovering && (
           <ActionIcon

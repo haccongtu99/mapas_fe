@@ -2,7 +2,7 @@ import { Stack, Image, ActionIcon, Box } from '@mantine/core'
 import { useEffect, useState } from 'react'
 import classes from './LayoutImages.module.scss'
 import AppIcon from '../AppIcon'
-import { DEFAULT_LAYOUT } from '@/constants'
+import { LAYOUT_CONFIGS } from '@/constants/static-data'
 
 type TAppLayoutImages = {
   gap?: number
@@ -47,13 +47,13 @@ const AppLayoutImages = ({
   const layoutConfigs = (): Array<number[]> => {
     switch (state) {
       case 1:
-        return [[0], [1, 2], [3, 4, 5]]
+        return LAYOUT_CONFIGS.STATE_1
       case 2:
-        return [[0, 1], [2], [3, 4, 5]]
+        return LAYOUT_CONFIGS.STATE_2
       case 3:
-        return [[0, 1, 2], [3, 4], [5]]
+        return LAYOUT_CONFIGS.STATE_3
       default:
-        return [[0], [1, 2], [3, 4, 5]]
+        return LAYOUT_CONFIGS.DEFAULT
     }
   }
   const [tempImages, setTempImages] = useState<string[]>([])
@@ -80,7 +80,9 @@ const AppLayoutImages = ({
       return
     }
     const newTempImages = [...tempImages]
-    images.forEach((image: string, index) => (newTempImages[index] = image))
+    images.forEach(
+      (image: string, index: number) => (newTempImages[index] = image)
+    )
     setTempImages(newTempImages)
   }, [images])
 

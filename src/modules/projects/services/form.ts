@@ -1,5 +1,6 @@
 import { createFormContext } from '@mantine/form'
 import { TImageInfos, TProject, TProjectInfos } from '../types'
+import { LAYOUT_CONFIGS } from '@/constants'
 
 export const initialProjectFormValues: TProject = {
   // name: '',
@@ -7,7 +8,8 @@ export const initialProjectFormValues: TProject = {
   // description: ''
   name: 'Name 1',
   client: 'Client 1',
-  description: 'Description 1'
+  description: 'Description 1',
+  layout: LAYOUT_CONFIGS.DEFAULT
 }
 
 export const [

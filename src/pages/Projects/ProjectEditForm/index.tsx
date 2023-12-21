@@ -15,13 +15,14 @@ import useHandlerProject from '@/modules/projects/composables/useHandlerProject'
 import { convertProject } from '@/modules/projects/composables/useConvertProject'
 import AppIcon from '@/components/AppIcon'
 import AppInput from '@/components/AppInput'
-import AppLayoutImages from '@/components/AppLayoutImages'
-import { AppUploadImage } from '@/components/AppUploadImage'
+import AppUploadImage from '@/components/AppUploadImage'
 import Breadcrumb from '@/components/Breadcrumbs'
 import Button from '@/components/Button'
 import Modal from '@/components/Modal'
 import classes from '../Projects.module.scss'
 import { notifications } from '@mantine/notifications'
+import ProjectLayoutImages from '@/modules/projects/components/ProjectLayoutImages'
+import { LAYOUT_CONFIGS } from '@/constants'
 
 export const ProjectUpdateForm = () => {
   const { id } = useParams()
@@ -107,6 +108,10 @@ export const ProjectUpdateForm = () => {
     form.setValues({ images: tempFiles })
   }
 
+  const test = () => {
+    console.log('test...')
+  }
+
   useEffect(() => {
     setProjectData(form.values as unknown as TProjectInfos)
   }, [form.values])
@@ -176,7 +181,7 @@ export const ProjectUpdateForm = () => {
               </Flex>
             </Flex>
             <Box className={classes.container__form}>
-              {JSON.stringify(form.values)}
+              {/* {JSON.stringify(form.values)} */}
               <AppUploadImage
                 imagePreview={tempAvatarPreview}
                 title={t(translation.common.coverPhoto)}
@@ -209,17 +214,10 @@ export const ProjectUpdateForm = () => {
                 {...form.getInputProps('description')}
               />
               <div style={{ marginTop: '20px' }}>
-                <AppLayoutImages
+                <ProjectLayoutImages
                   images={tempImagesPreview}
-                  updateImages={onUpdateProjectImagesPath}
-                />
-              </div>
-              <div style={{ marginTop: '20px' }}>
-                <AppUploadImage
-                  type="rectangle"
-                  allowMultiUpload={true}
-                  title={t(translation.global.images)}
-                  onChange={updateProjectAvatar}
+                  layout={LAYOUT_CONFIGS.DEFAULT}
+                  updateImages={test}
                 />
               </div>
             </Box>

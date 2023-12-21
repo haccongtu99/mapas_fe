@@ -7,6 +7,7 @@ export interface TProject {
   avatar?: File | any
   description?: string
   client: string
+  layout?: Array<number[]>
   images?: File[] | TTempImageInfos | any
 }
 

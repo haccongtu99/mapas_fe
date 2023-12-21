@@ -16,10 +16,13 @@ type TAppUploadImage = {
   hasPreview?: boolean
   imagePreview?: string
   children?: React.ReactNode
-  onChange: (data: any) => void
+  onChange: (data: {
+    file: File[] | FileWithPath[] | any
+    url: string[]
+  }) => void
 }
 
-export const AppUploadImage = ({
+const AppUploadImage = ({
   type = 'square',
   title,
   size,
@@ -120,3 +123,5 @@ export const AppUploadImage = ({
     </Box>
   )
 }
+
+export default AppUploadImage

@@ -2,21 +2,22 @@ import { useEffect, useState } from 'react'
 import { Box, Flex, LoadingOverlay, Radio, Stack, Text } from '@mantine/core'
 import { notifications } from '@mantine/notifications'
 import { useTranslation } from 'react-i18next'
-import AppInput from '@/components/AppInput'
-import { AppUploadImage } from '@/components/AppUploadImage'
 import { translation } from '@/configs/i18n/i18n'
+import { TProject, TTempImageInfos } from '@/modules/projects/types'
 import {
   ProjectCreateNewProvider,
   initialProjectFormValues,
   useProjectCreateNewForm
 } from '@/modules/projects/services/form'
-import { TProject, TTempImageInfos } from '@/modules/projects/types'
-import Breadcrumb from '@/components/Breadcrumbs'
-import classes from '../Projects.module.scss'
-import Button from '@/components/Button'
 import AppLayoutImages from '@/components/AppLayoutImages'
+import AppInput from '@/components/AppInput'
+import AppUploadImage from '@/components/AppUploadImage'
+import Button from '@/components/Button'
+import Breadcrumb from '@/components/Breadcrumbs'
 import useHandlerProject from '@/modules/projects/composables/useHandlerProject'
 import { convertProject } from '@/modules/projects/composables/useConvertProject'
+import classes from '../Projects.module.scss'
+import { LAYOUT_CONFIGS } from '@/constants'
 
 export const ProjectCreateForm = () => {
   const { t } = useTranslation()
@@ -45,9 +46,27 @@ export const ProjectCreateForm = () => {
 
   const updateInput = (data: {
     field: keyof TProject
-    value: string | number
+    value: string | number | any
   }) => {
     form.setValues({ [data.field]: data.value })
+  }
+
+  const updateLayout = (value: '1' | '2' | '3' | string) => {
+    setLayout(value)
+    switch (value) {
+      case '1':
+        form.setValues({ layout: LAYOUT_CONFIGS.STATE_1 })
+        break
+      case '2':
+        form.setValues({ layout: LAYOUT_CONFIGS.STATE_2 })
+        break
+      case '3':
+        form.setValues({ layout: LAYOUT_CONFIGS.STATE_3 })
+        break
+      default:
+        form.setValues({ layout: LAYOUT_CONFIGS.DEFAULT })
+        break
+    }
   }
 
   const updateProjectAvatar = (data: TTempImageInfos) => {
@@ -115,7 +134,7 @@ export const ProjectCreateForm = () => {
               </Flex>
             </Flex>
             <Box className={classes.container__form}>
-              {JSON.stringify(form.values)}
+              {/* {JSON.stringify(form.values)} */}
               <AppUploadImage
                 title={t(translation.common.coverPhoto)}
                 type="square"
@@ -172,7 +191,7 @@ export const ProjectCreateForm = () => {
                 >
                   <Radio.Group
                     value={layout}
-                    onChange={setLayout}
+                    onChange={value => updateLayout(value)}
                     classNames={{ root: classes.radio__group }}
                   >
                     <Radio value="1" label="Giao diện 1" color="gray" />
