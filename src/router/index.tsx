@@ -26,7 +26,7 @@ export const router = createBrowserRouter([
           },
           {
             lazy: () => import('../pages/Projects/ProjectEditForm'),
-            path: PROJECTS_ROUTES.EDIT
+            path: PROJECTS_ROUTES.EDIT_BY_ID
           }
         ]
       },

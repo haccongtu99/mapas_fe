@@ -1,10 +1,11 @@
-import { Box, Flex, Text, TextInput, Textarea } from '@mantine/core'
-import { useFocusWithin } from '@mantine/hooks'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { translation } from '@/configs/i18n/i18n'
+import { Box, Flex, Text, TextInput, Textarea } from '@mantine/core'
+import { useFocusWithin } from '@mantine/hooks'
 import classes from './Input.module.scss'
 import clsx from 'clsx'
-import { translation } from '@/configs/i18n/i18n'
+import { RichtTextInput } from './RichInput'
 
 export interface InputProps {
   title?: string
@@ -15,12 +16,10 @@ export interface InputProps {
   canToggleActive?: boolean
   isActiveInput?: boolean
   typeInput?: string
-  hiddenToggleIcon?: boolean
   moreOptions?: React.ReactNode
   classNames?: string
   checkIsFocused?: (data: boolean) => void
   updateInput: (data: { value: string | number; field: any }) => void
-  setInvalidInput?: (data: boolean) => void
 }
 
 type TypeInputProps = Pick<
@@ -33,7 +32,6 @@ type TypeInputProps = Pick<
   | 'updateInput'
   | 'classNames'
   | 'isImperative'
-  | 'setInvalidInput'
 >
 
 export const TypeInput = ({
@@ -44,10 +42,10 @@ export const TypeInput = ({
   classNames,
   isImperative,
   value,
-  updateInput
+  updateInput,
+  ...props
 }: TypeInputProps) => {
-  const { t } = useTranslation()
-  const [tempValue, setTempValue] = useState<string>('')
+  const [tempValue, setTempValue] = useState<string>((value ?? '').toString())
 
   const onUpdateInput = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -64,6 +62,17 @@ export const TypeInput = ({
     setTempValue(event.target.value)
   }
 
+  const onUpdateRichText = (data: string) => {
+    updateInput({
+      field,
+      value: data
+    })
+  }
+
+  useEffect(() => {
+    setTempValue(value as string)
+  }, [value])
+
   switch (typeInput) {
     case 'number':
       return (
@@ -74,10 +83,10 @@ export const TypeInput = ({
           }}
           placeholder={placeholder}
           disabled={!isActiveInput}
-          // defaultValue={'123'}
-          // value={value}
           onChange={onChange}
           onBlur={onUpdateInput}
+          value={Number(value)}
+          {...props}
         />
       )
     case 'area':
@@ -88,10 +97,18 @@ export const TypeInput = ({
           }}
           placeholder={placeholder}
           disabled={!isActiveInput}
-          // defaultValue={'123'}
-          // value={value}
           onChange={onChange}
           onBlur={onUpdateInput}
+          value={tempValue}
+          {...props}
+        />
+      )
+    case 'richArea':
+      return (
+        <RichtTextInput
+          field={field}
+          value={tempValue}
+          update={onUpdateRichText}
         />
       )
     default:
@@ -102,28 +119,27 @@ export const TypeInput = ({
           }}
           placeholder={placeholder}
           disabled={!isActiveInput}
-          // defaultValue={'123'}
-          // value={value}
           onChange={onChange}
           onBlur={onUpdateInput}
+          value={tempValue}
+          {...props}
         />
       )
   }
 }
 
-export const AppInput = ({
+const AppInput = ({
   title,
   field,
   placeholder = '',
   typeInput = 'text',
   isImperative = false,
-  hiddenToggleIcon = false,
   moreOptions,
   value = '',
   classNames,
   checkIsFocused,
   updateInput,
-  setInvalidInput
+  ...props
 }: InputProps) => {
   const { t } = useTranslation()
   const { ref, focused } = useFocusWithin()
@@ -140,11 +156,7 @@ export const AppInput = ({
   return (
     <Box ref={ref}>
       {title && (
-        <Flex
-          justify="space-between"
-          align={'flex-end'}
-          style={{ margin: '20px 0 10px 0' }}
-        >
+        <Flex justify="space-between" align={'flex-end'} mb={10} mt={20}>
           <Text className={classes['text__title']}>{title}</Text>
           <Flex align={'center'}>
             {isImperative && (
@@ -164,9 +176,11 @@ export const AppInput = ({
         isImperative={isImperative}
         value={value}
         updateInput={changeParentInput}
-        setInvalidInput={setInvalidInput}
+        {...props}
       />
       {moreOptions}
     </Box>
   )
 }
+
+export default AppInput

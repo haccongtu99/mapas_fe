@@ -1,38 +1,30 @@
 import customAxios from './axios'
 export default class Api {
-  protected async get(url: string, configs?: any) {
+  protected async get(url: string, configs?: Record<string, any>) {
     const res = await customAxios.get(url, configs)
     return res.data
   }
 
   protected async post(
     url: string,
-    input?: Record<string, unknown> | any,
-    configs?: any
+    input?: Record<string, any>,
+    configs?: Record<string, any>
   ) {
-    if (configs) {
-      const res = await customAxios.post(url, input, configs)
-      return res.data
-    }
-    const res = await customAxios.post(url, input)
+    const res = await customAxios.post(url, input, configs)
     return res.data
   }
 
   protected async patch(
     url: string,
     input?: Record<string, unknown>,
-    configs?: any
+    configs?: Record<string, unknown>
   ) {
-    if (configs) {
-      const res = await customAxios.post(url, input, configs)
-      return res.data
-    }
-    const res = await customAxios.patch(url, input)
+    const res = await customAxios.patch(url, input, configs)
     return res.data
   }
 
-  protected async delete(url: string, configs?: any) {
-    const res = await customAxios.delete(url, configs)
+  protected async delete(url: string) {
+    const res = await customAxios.delete(url)
     return res.data
   }
 }

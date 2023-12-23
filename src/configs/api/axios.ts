@@ -1,7 +1,6 @@
 import axios from 'axios'
-import { API_URL } from '../../constants/endpoint'
 import storage from '@/storage'
-import { AuthApi } from '@/modules/auth/services/api'
+import { API_URL, AUTH_ENDPOINT } from '@/constants/endpoint'
 
 export const originAxios = axios.create({
   baseURL: API_URL
@@ -9,6 +8,8 @@ export const originAxios = axios.create({
 
 const customAxios = axios.create({
   baseURL: API_URL
+  // headers: { 'Content-Type': 'application/json' },
+  // withCredentials: true
 })
 
 customAxios.interceptors.request.use(
@@ -30,12 +31,16 @@ customAxios.interceptors.response.use(
   },
   async error => {
     const prevRequest = error?.config
-    const authApi = new AuthApi()
-    if (error?.response?.status === 403 && !prevRequest?.sent) {
+    if (error?.response?.status === 401 && !prevRequest?.sent) {
       prevRequest.sent = true
       const refreshToken = storage.getRefreshToken()
-      const data = await authApi.refreshToken({ refreshToken })
+      const { data } = await customAxios.post(
+        `${AUTH_ENDPOINT}/refresh-token`,
+        { refreshToken }
+      )
       prevRequest.headers['Authorization'] = `Bearer ${data.accessToken}`
+      storage.clearToken()
+      storage.clearRefreshToken()
       storage.setToken(data.accessToken)
       storage.setRefreshToken(data.newRefreshToken)
       return customAxios(prevRequest)

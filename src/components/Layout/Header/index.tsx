@@ -1,26 +1,19 @@
+import { useNavigate } from 'react-router-dom'
 import { AppShellHeader, Button, Flex, Input, Text } from '@mantine/core'
+import storage from '@/storage'
 import { IconSearch } from '@tabler/icons-react'
 import classes from './Header.module.scss'
 import { AuthApi } from '@/modules/auth/services/api'
-import { AppIcon } from '@/components/AppIcon'
-import storage from '@/storage'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { useAuthStores } from '@/stores/auth'
+import AppIcon from '@/components/AppIcon'
 
 export const Header = () => {
   const authApi = new AuthApi()
   const navigate = useNavigate()
-  const location = useLocation()
-  const authStores = useAuthStores()
 
   const onLogout = async () => {
-    const accessToken = storage.getToken()
     const refreshToken = storage.getRefreshToken()
-    const config = {
-      headers: { Authorization: `Bearer ${accessToken}` }
-    }
-    const data = await authApi.logout({ refreshToken }, config)
-    if (data.message) {
+    const data = await authApi.logout({ refreshToken })
+    if (data?.message) {
       // navigate('/login', { state: { from: location }, replace: true });
       navigate('/login')
       storage.clearToken()
@@ -44,8 +37,10 @@ export const Header = () => {
           >
             Tìm kiếm
           </Button>
-          <Flex px={20} align="center">
-            <Text>Chào Admin</Text>
+          <Flex px={20} align="center" gap={20}>
+            <Text fw={700} size="sm">
+              Chào Admin!
+            </Text>
             <AppIcon name="logout" onClick={onLogout} />
           </Flex>
         </Flex>

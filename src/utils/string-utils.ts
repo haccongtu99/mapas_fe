@@ -9,10 +9,10 @@ export const snakeCaseToCamel = (str: string) => {
   return str.toLowerCase().replace(/(-\w)/g, m => m.toUpperCase().substring(1))
 }
 
-export const blobToBase64 = (blob: any) => {
+export const blobToBase64 = (blob: any): Promise<string> => {
   return new Promise((resolve, _) => {
     const reader = new FileReader()
-    reader.onloadend = () => resolve(reader.result)
+    reader.onloadend = () => resolve(reader.result as string)
     reader.readAsDataURL(blob)
   })
 }

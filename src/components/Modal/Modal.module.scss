@@ -1,5 +1,5 @@
 .modal {
-    padding: 0 60px 60px;
+    padding: 40px;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
     overflow-x: scroll;
@@ -20,6 +20,10 @@
 
     font-size: $text-3xl;
     font-weight: $font-bold;
+}
+
+.header {
+    padding: 26px;
 }
 
 ::-webkit-scrollbar {

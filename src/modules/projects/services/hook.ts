@@ -2,7 +2,7 @@ import { MutationConfig, QueryConfig } from '@/configs/api'
 import { ProjectApi } from './api'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { queryString } from '@/constants/queryString'
-import { TProject } from '../types'
+import { TProject, TProjectInfos } from '../types'
 
 const projectApi = new ProjectApi()
 
@@ -10,7 +10,7 @@ type TQueryConfigType = typeof projectApi.findAll | typeof projectApi.findById
 type TMutationConfigType =
   | typeof projectApi.create
   | typeof projectApi.update
-  | typeof projectApi.delete
+  | typeof projectApi.deleteProjectById
 
 type TProjectQueryConfig = {
   config?: QueryConfig<TQueryConfigType>
@@ -39,8 +39,8 @@ export class ProjectQuery {
 
   useDeleteProject = (config?: TProjectMutateConfig) => {
     return useMutation({
-      mutationFn: projectApi.delete,
       mutationKey: [queryString.PROJECT],
+      mutationFn: (id: string) => projectApi.deleteProjectById(id),
       ...config
     })
   }
@@ -48,14 +48,17 @@ export class ProjectQuery {
   useCreateProject = (config?: TProjectMutateConfig) => {
     return useMutation({
       mutationKey: [queryString.PROJECT],
-      mutationFn: (input: TProject) => projectApi.create(input)
+      mutationFn: (input: TProject) => projectApi.create(input),
+      onSuccess: (data: any) => data,
+      ...config
     })
   }
 
   useUpdateProject = (config?: TProjectMutateConfig) => {
     return useMutation({
       mutationKey: [queryString.PROJECT],
-      mutationFn: (input: TProject) => projectApi.update(input)
+      mutationFn: (input: TProjectInfos) => projectApi.update(input),
+      ...config
     })
   }
 }
