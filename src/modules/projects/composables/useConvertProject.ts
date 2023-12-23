@@ -28,7 +28,6 @@ export const convertProject = (
   const convertedProject = {
     id,
     client: project.client,
-    // images: project.images ?? undefined,
     name: project.name,
     description: project.description
   } as TProjectUpdate

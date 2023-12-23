@@ -206,10 +206,10 @@ export const ProjectUpdateForm = () => {
               />
               <AppInput
                 isImperative={true}
-                typeInput="area"
+                typeInput="richArea"
                 title={label.description}
                 field="description"
-                placeholder="Mô tả"
+                placeholder={label.description}
                 updateInput={updateInput}
                 {...form.getInputProps('description')}
               />

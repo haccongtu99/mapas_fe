@@ -2,30 +2,43 @@ import { useEffect, useState } from 'react'
 import { RichTextEditor } from '@mantine/tiptap'
 import { useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
+import Highlight from '@tiptap/extension-highlight'
+import Underline from '@tiptap/extension-underline'
 import classes from './RichInput.module.scss'
 
-export const RichtTextInput = ({ ...props }) => {
-  const [content, setContent] = useState<string>('')
+type TRichTextInput = {
+  value: any
+  field: string
+  update: (data: string) => void
+}
+
+export const RichtTextInput = ({
+  value,
+  field,
+  update,
+  ...props
+}: TRichTextInput) => {
+  const [content, setContent] = useState<string>(value)
   const editor = useEditor({
-    extensions: [StarterKit],
+    extensions: [StarterKit, Highlight, Underline],
     content
   })
 
-  const onBlur = (event: any) => {
-    const test = editor?.getHTML()
-    setContent(test as string)
+  const onBlur = () => {
+    setContent(editor?.getHTML() as string)
+    update(editor?.getHTML() as string)
   }
 
-  // const onUpdateRichText = (data: string) => {
-  //   const test = editor?.getHTML();
-  //   console.log(test, 'test...');
-  //   setContent(test as string)
-  // }
+  useEffect(() => {
+    setContent(value)
+    editor?.commands.clearContent()
+    editor?.commands.insertContent(value)
+  }, [value])
 
   return (
     <RichTextEditor
-      editor={editor}
       classNames={{ root: classes.rich__container }}
+      editor={editor}
       onBlur={onBlur}
     >
       <RichTextEditor.Toolbar

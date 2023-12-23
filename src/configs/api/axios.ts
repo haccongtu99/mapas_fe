@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { API_URL, AUTH_ENDPOINT } from '../../constants/endpoint'
 import storage from '@/storage'
+import { API_URL, AUTH_ENDPOINT } from '@/constants/endpoint'
 
 export const originAxios = axios.create({
   baseURL: API_URL

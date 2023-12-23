@@ -173,9 +173,11 @@
     "dragDropLabel": "Upload or Drag/drop the image/video here",
     "coverPhoto": "Cover Photo",
     "invalidValue": "Value is must not be empty!",
+    "invalidPassword": "Invalid password!",
+    "invalidLengthPassword": "Password's length must be at least 04 chracters long",
     "createProjectSuccess": "Create Project Successfully!",
-    "updateProjectSuccess": "Update Project Successfully!"
-    
+    "updateProjectSuccess": "Update Project Successfully!",
+    "userNotExist": "This user has not been registered"
   },
   "projects": {
     "title": "Title of projects"

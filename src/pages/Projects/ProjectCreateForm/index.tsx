@@ -159,15 +159,6 @@ export const ProjectCreateForm = () => {
               />
               <AppInput
                 isImperative={true}
-                typeInput="area"
-                title={label.description}
-                field="description"
-                placeholder={label.description}
-                updateInput={updateInput}
-                {...form.getInputProps('description')}
-              />
-              <AppInput
-                isImperative={true}
                 typeInput="richArea"
                 title={label.description}
                 field="description"
@@ -194,9 +185,33 @@ export const ProjectCreateForm = () => {
                     onChange={value => updateLayout(value)}
                     classNames={{ root: classes.radio__group }}
                   >
-                    <Radio value="1" label="Giao diện 1" color="gray" />
-                    <Radio value="2" label="Giao diện 2" color="gray" />
-                    <Radio value="3" label="Giao diện 3" color="gray" />
+                    <Radio
+                      value="1"
+                      label="Giao diện 1"
+                      color="gray"
+                      classNames={{
+                        label: classes.radio__label,
+                        inner: classes.radio__inner
+                      }}
+                    />
+                    <Radio
+                      value="2"
+                      label="Giao diện 2"
+                      color="gray"
+                      classNames={{
+                        label: classes.radio__label,
+                        inner: classes.radio__inner
+                      }}
+                    />
+                    <Radio
+                      value="3"
+                      label="Giao diện 3"
+                      color="gray"
+                      classNames={{
+                        label: classes.radio__label,
+                        inner: classes.radio__inner
+                      }}
+                    />
                   </Radio.Group>
                 </AppUploadImage>
               </div>

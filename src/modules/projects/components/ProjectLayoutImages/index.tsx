@@ -34,7 +34,7 @@ const ProjectLayoutImages = ({
   }
 
   const onUpdateImages = (data: TTempImageInfos) => {
-    console.log(data, 'data...')
+    // console.log(data, 'data...')
   }
 
   useEffect(() => {

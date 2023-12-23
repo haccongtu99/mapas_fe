@@ -52,6 +52,14 @@
   }
 }
 
-.radio_item {
-  margin-right: 5px;
+.radio__label {
+  font-style: italic;
+  font-weight: 400;
+  font-size: 12px;
+  text-align: right;
+  padding-left: 4px;
+}
+
+.radio__inner {
+  scale: 0.8;
 }

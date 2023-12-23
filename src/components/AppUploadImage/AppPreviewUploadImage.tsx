@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { ActionIcon, Box, Image } from '@mantine/core'
 import AppIcon from '../AppIcon'
 import clsx from 'clsx'
 import classes from './UploadImage.module.scss'
-import AppLayoutImages from '../AppLayoutImages'
 
 const AppPreviewUploadImage = ({ fileURL, className, removeFile }: any) => {
   const [isHovering, setIsHovering] = useState<boolean>(false)

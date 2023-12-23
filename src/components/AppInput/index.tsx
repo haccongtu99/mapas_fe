@@ -20,7 +20,6 @@ export interface InputProps {
   classNames?: string
   checkIsFocused?: (data: boolean) => void
   updateInput: (data: { value: string | number; field: any }) => void
-  setInvalidInput?: (data: boolean) => void
 }
 
 type TypeInputProps = Pick<
@@ -33,7 +32,6 @@ type TypeInputProps = Pick<
   | 'updateInput'
   | 'classNames'
   | 'isImperative'
-  | 'setInvalidInput'
 >
 
 export const TypeInput = ({
@@ -62,6 +60,13 @@ export const TypeInput = ({
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setTempValue(event.target.value)
+  }
+
+  const onUpdateRichText = (data: string) => {
+    updateInput({
+      field,
+      value: data
+    })
   }
 
   useEffect(() => {
@@ -99,7 +104,13 @@ export const TypeInput = ({
         />
       )
     case 'richArea':
-      return <RichtTextInput {...props} />
+      return (
+        <RichtTextInput
+          field={field}
+          value={tempValue}
+          update={onUpdateRichText}
+        />
+      )
     default:
       return (
         <TextInput
@@ -128,7 +139,6 @@ const AppInput = ({
   classNames,
   checkIsFocused,
   updateInput,
-  setInvalidInput,
   ...props
 }: InputProps) => {
   const { t } = useTranslation()
@@ -166,7 +176,6 @@ const AppInput = ({
         isImperative={isImperative}
         value={value}
         updateInput={changeParentInput}
-        setInvalidInput={setInvalidInput}
         {...props}
       />
       {moreOptions}
